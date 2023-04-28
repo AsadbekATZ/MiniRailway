@@ -29,9 +29,6 @@ public class TrainEntity extends BaseEntity {
     private List<SeatEntity> seats;
 
     @Column(nullable = false)
-    private LocalDateTime startTime;
-
-    @Column(nullable = false)
     private LocalDateTime departure;
 
     @Column(nullable = false)
