@@ -1,0 +1,38 @@
+package com.example.MiniRailway.domain.entity.user;
+
+import com.example.MiniRailway.domain.entity.BaseEntity;
+import com.example.MiniRailway.domain.entity.ticket.TicketEntity;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
+import java.util.List;
+
+@Entity(name = "users")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Accessors(chain = true)
+public class UserEntity extends BaseEntity {
+    @Column(unique = true, nullable = false)
+    @NotBlank
+    private String username;
+
+    @Column(nullable = false)
+    @NotBlank
+    private String password;
+
+    @Column(nullable = false)
+    @Positive
+    private Double balance = 100000.0;
+
+    @Column(nullable = false)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<TicketEntity> tickets;
+}
