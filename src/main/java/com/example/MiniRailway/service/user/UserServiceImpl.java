@@ -37,6 +37,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public void delete(UserEntity userEntity) {
+        userRepository.delete(userEntity);
+    }
+
+    @Override
     public void update(UserDto createDto, UUID id) {
         Optional<UserEntity> userEntity = userRepository.findById(id);
         if (userEntity.isEmpty()){
@@ -47,7 +52,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Optional<UserEntity> getById(UUID id) {
-        return userRepository.findById(id);
+        Optional<UserEntity> userEntity = userRepository.findById(id);
+        if (!userEntity.isEmpty()){
+            return userEntity;
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -69,10 +78,5 @@ public class UserServiceImpl implements UserService{
     @Override
     public void fillBalance(Double amount, UUID userId) {
         userRepository.fillBalance(amount, userId);
-    }
-
-    @Override
-    public void delete(UserDto userDto) {
-        userRepository.delete(modelMapper.map(userDto, UserEntity.class));
     }
 }

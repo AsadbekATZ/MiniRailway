@@ -10,6 +10,7 @@ import java.util.UUID;
 public interface BaseService<CD, E> {
     void save(CD createDto);
     void delete(UUID id);
+    void delete(E e);
     void update(CD createDto, UUID id);
     Optional<E> getById(UUID id);
     List<E> getAll();
