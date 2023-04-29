@@ -12,4 +12,5 @@ import java.util.UUID;
 public interface UserService extends BaseService<UserDto, UserEntity> {
     UserEntity login(String username, String password);
     void fillBalance(Double amount, UUID userId);
+    void delete(UserDto userDto);
 }
