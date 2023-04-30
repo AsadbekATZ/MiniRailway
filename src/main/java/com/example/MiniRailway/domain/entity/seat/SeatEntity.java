@@ -20,8 +20,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class SeatEntity extends BaseEntity {
-    @Column(nullable = false)
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "seat")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ticket_id", referencedColumnName = "id")
     private TicketEntity ticket;
 
     @Column(nullable = false)
@@ -31,7 +31,6 @@ public class SeatEntity extends BaseEntity {
     @Positive()
     private Double price;
 
-    @Column(nullable = false, unique = true)
     @ManyToOne(cascade = CascadeType.ALL)
     private TrainEntity train;
 }
