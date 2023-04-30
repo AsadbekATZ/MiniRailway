@@ -24,12 +24,8 @@ public class TrainEntity extends BaseEntity {
     @NotBlank
     private String name;
 
-    @Column(nullable = false)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "train")
     private List<SeatEntity> seats;
-
-    @Column(nullable = false)
-    private LocalDateTime startTime;
 
     @Column(nullable = false)
     private LocalDateTime departure;
