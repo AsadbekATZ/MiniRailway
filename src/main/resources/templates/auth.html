@@ -28,14 +28,14 @@
         <div id="login-form" class="hidden w-full bg-transparent border border-2 border-white/50 backdrop-blur-[20px] shadow shadow-[0_0_30px_rgba(0,0,0,0.5)] rounded-[20px] shadow sm:max-w-md xl:p-0">
             <h1 class="text-center text-3xl mt-10 font-bold">Login</h1>
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <form class="space-y-10" th:action="@{/register}" method="post" th:object="${UserCreateDto}">
+                <form class="space-y-10" th:action="@{/login}" method="post" th:object="${UserCreateDto}">
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="email" name="email" id="login_username" class="block py-2.5 pr-[3rem] text-xl px-0 w-full bg-transparent border-0 border-b-2 appearance-none text-[#162938] border-[#162938] focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required />
+                        <input type="text" name="username" id="login_username" class="block py-2.5 pr-[3rem] text-xl px-0 w-full bg-transparent border-0 border-b-2 appearance-none text-[#162938] border-[#162938] focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required />
                         <label for="login_username" class="peer-focus:font-medium absolute text-xl text-[#162938] duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Username</label>
                         <i class="fa-solid fa-user absolute right-[0.5rem] top-[0.6rem] text-xl"></i>
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="email" name="email" id="login_password" class="block py-2.5 pr-[2.5rem] text-xl px-0 w-full bg-transparent border-0 border-b-2 appearance-none text-[#162938] border-[#162938] focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required />
+                        <input type="text" name="password" id="login_password" class="block py-2.5 pr-[2.5rem] text-xl px-0 w-full bg-transparent border-0 border-b-2 appearance-none text-[#162938] border-[#162938] focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required />
                         <label for="login_password" class="peer-focus:font-medium absolute text-xl text-[#162938] duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Password</label>
                         <i class="fa-solid fa-lock absolute right-[0.5rem] top-[0.6rem] text-xl"></i>
                     </div>
@@ -49,19 +49,19 @@
         <div id="register-form" class="w-full bg-transparent border border-2 border-white/50 backdrop-blur-[20px] shadow shadow-[0_0_30px_rgba(0,0,0,0.5)] rounded-[20px] shadow sm:max-w-md xl:p-0">
             <h1 class="text-center text-3xl mt-10 font-bold">Register</h1>
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <form class="space-y-10" th:action="@{/login}" method="post" th:object="${UserCreateDto}">
+                <form class="space-y-10" th:action="@{/}" method="post" th:object="${UserCreateDto}">
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="email" name="email" id="register_fullName" class="block py-2.5 pr-[3rem] text-xl px-0 w-full bg-transparent border-0 border-b-2 appearance-none text-[#162938] border-[#162938] focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required />
+                        <input type="text" name="fullName" id="register_fullName" class="block py-2.5 pr-[3rem] text-xl px-0 w-full bg-transparent border-0 border-b-2 appearance-none text-[#162938] border-[#162938] focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required />
                         <label for="register_fullName" class="peer-focus:font-medium absolute text-xl text-[#162938] duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Full name</label>
                         <i class="fa-solid fa-id-badge absolute right-[0.5rem] top-[0.6rem] text-xl"></i>
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="email" name="email" id="register_username" class="block py-2.5 pr-[3rem] text-xl px-0 w-full bg-transparent border-0 border-b-2 appearance-none text-[#162938] border-[#162938] focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required />
+                        <input type="text" name="username" id="register_username" class="block py-2.5 pr-[3rem] text-xl px-0 w-full bg-transparent border-0 border-b-2 appearance-none text-[#162938] border-[#162938] focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required />
                         <label for="register_username" class="peer-focus:font-medium absolute text-xl text-[#162938] duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Username</label>
                         <i class="fa-solid fa-user absolute right-[0.5rem] top-[0.6rem] text-xl"></i>
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="email" name="email" id="register_password" class="block py-2.5 pr-[2.5rem] text-xl px-0 w-full bg-transparent border-0 border-b-2 appearance-none text-[#162938] border-[#162938] focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required />
+                        <input type="text" name="password" id="register_password" class="block py-2.5 pr-[2.5rem] text-xl px-0 w-full bg-transparent border-0 border-b-2 appearance-none text-[#162938] border-[#162938] focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required />
                         <label for="register_password" class="peer-focus:font-medium absolute text-xl text-[#162938] duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Password</label>
                         <i class="fa-solid fa-lock absolute right-[0.5rem] top-[0.6rem] text-xl"></i>
                     </div>

@@ -16,6 +16,4 @@ public class UserDto {
     String fullName;
     String username;
     String password;
-    Double balance;
-    private List<TicketEntity> tickets;
 }

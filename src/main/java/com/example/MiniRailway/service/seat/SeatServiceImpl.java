@@ -2,7 +2,9 @@ package com.example.MiniRailway.service.seat;
 
 import com.example.MiniRailway.domain.dto.SeatDto;
 import com.example.MiniRailway.domain.entity.seat.SeatEntity;
+import com.example.MiniRailway.exception.NotFoundException;
 import com.example.MiniRailway.repository.SeatRepository;
+import com.example.MiniRailway.service.BaseService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class SeatServiceImpl implements SeatService{
+public class SeatServiceImpl implements BaseService<SeatDto, SeatEntity> {
 
     private final SeatRepository seatRepository;
 
@@ -26,7 +28,6 @@ public class SeatServiceImpl implements SeatService{
 
     @Override
     public void delete(UUID id) {
-
     }
 
     @Override
@@ -36,20 +37,16 @@ public class SeatServiceImpl implements SeatService{
 
     @Override
     public void update(SeatDto createDto, UUID id) {
-        Optional<SeatEntity> seatEntity = seatRepository.findById(id);
-        if (seatEntity.isEmpty()){
-            System.out.println("Don`t found");
-        }
-        seatRepository.save(modelMapper.map(createDto,SeatEntity.class));
     }
 
     @Override
-    public Optional<SeatEntity> getById(UUID id) {
-        Optional<SeatEntity> seatEntity = seatRepository.findById(id);
-        if (seatEntity.isPresent()){
-            return seatEntity;
+    public SeatEntity getById(UUID id) {
+        if (seatRepository.findById(id).isPresent()){
+            return seatRepository.findById(id).get();
+        } else {
+            throw new NotFoundException("Seat not found");
         }
-        return Optional.empty();
+
     }
 
     @Override
@@ -57,8 +54,17 @@ public class SeatServiceImpl implements SeatService{
         return seatRepository.findAll();
     }
 
-    @Override
     public List<SeatEntity> emptySeats(UUID trainId) {
         return null;
+    }
+
+    public void updateSeatPrice(Double price, UUID seatId) {
+        try {
+            Optional<SeatEntity> seat = seatRepository.findById(seatId);
+            seat.get().setPrice(price);
+            seatRepository.save(seat.get());
+        } catch (Exception e){
+            throw new NotFoundException("This seat does not exists!");
+        }
     }
 }
