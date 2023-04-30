@@ -20,6 +20,10 @@ import java.util.List;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class UserEntity extends BaseEntity {
+    @Column(nullable = false)
+    @NotBlank
+    private String fullName;
+
     @Column(unique = true, nullable = false)
     @NotBlank
     private String username;

@@ -38,4 +38,7 @@ public class TrainEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private DestinationPoint endPoint;
+
+    @Enumerated(EnumType.STRING)
+    TrainClass trainClass;
 }
