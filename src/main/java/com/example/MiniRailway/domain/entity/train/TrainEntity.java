@@ -24,7 +24,6 @@ public class TrainEntity extends BaseEntity {
     @NotBlank
     private String name;
 
-    @Column(nullable = false)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "train")
     private List<SeatEntity> seats;
 
