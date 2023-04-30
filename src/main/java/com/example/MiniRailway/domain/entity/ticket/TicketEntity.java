@@ -21,11 +21,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class TicketEntity extends BaseEntity {
-    @Column(nullable = false)
     @ManyToOne(cascade = CascadeType.ALL)
     private UserEntity user;
 
-    @Column(nullable = false)
     @OneToOne(mappedBy = "ticket")
     private SeatEntity seat;
 }
