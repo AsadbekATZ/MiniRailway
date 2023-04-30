@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "users")
@@ -20,6 +21,10 @@ import java.util.List;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class UserEntity extends BaseEntity {
+    @Column(nullable = false)
+    @NotBlank
+    private String fullName;
+
     @Column(unique = true, nullable = false)
     @NotBlank
     private String username;
@@ -33,5 +38,5 @@ public class UserEntity extends BaseEntity {
     private Double balance = 100000.0;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<TicketEntity> tickets;
+    private List<TicketEntity> tickets = new ArrayList<>();
 }

@@ -20,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class TrainEntity extends BaseEntity {
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     @NotBlank
     private String name;
 
@@ -38,4 +38,7 @@ public class TrainEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private DestinationPoint endPoint;
+
+    @Enumerated(EnumType.STRING)
+    TrainClass trainClass;
 }

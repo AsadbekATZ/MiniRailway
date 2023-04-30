@@ -1,5 +1,4 @@
 package com.example.MiniRailway.service;
-
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +11,6 @@ public interface BaseService<CD, E> {
     void delete(UUID id);
     void delete(E e);
     void update(CD createDto, UUID id);
-    Optional<E> getById(UUID id);
+    E getById(UUID id);
     List<E> getAll();
 }
