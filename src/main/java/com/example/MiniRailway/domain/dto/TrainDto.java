@@ -2,6 +2,7 @@ package com.example.MiniRailway.domain.dto;
 
 import com.example.MiniRailway.domain.entity.seat.SeatEntity;
 import com.example.MiniRailway.domain.entity.train.DestinationPoint;
+import com.example.MiniRailway.domain.entity.train.TrainClass;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,4 +22,5 @@ public class TrainDto {
     private LocalDateTime arrival;
     private DestinationPoint startPoint;
     private DestinationPoint endPoint;
+    private TrainClass trainClass;
 }
