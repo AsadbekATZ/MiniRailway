@@ -44,11 +44,15 @@ public class UserService implements BaseService<UserDto, UserEntity> {
 
     @Override
     public void update(UserDto createDto, UUID id) {
-        Optional<UserEntity> userEntity = userRepository.findById(id);
-        if (userEntity.isEmpty()){
-            System.out.println("Don`t found");
+        try{
+            Optional<UserEntity> userEntity = userRepository.findById(id);
+            userEntity.get().setUsername(createDto.getUsername());
+            userEntity.get().setFullName(createDto.getFullName());
+            userEntity.get().setPassword(createDto.getPassword());
+            userRepository.save(userEntity.get());
+        }catch (Exception e){
+            throw new NotFoundException("This user does not exists");
         }
-        userRepository.save(modelMapper.map(createDto, UserEntity.class));
     }
 
     @Override
@@ -64,6 +68,7 @@ public class UserService implements BaseService<UserDto, UserEntity> {
     public List<UserEntity> getAll() {
         return userRepository.findAll();
     }
+
     public UserEntity login(String username, String password) {
         UserEntity userEntity = userRepository.findByUsername(username).orElseThrow(() -> {
             throw new NotFoundException("Wrong username and/or password");

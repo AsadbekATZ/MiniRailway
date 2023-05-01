@@ -35,9 +35,6 @@ public class TrainEntity extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime departure;
 
-    @Column(nullable = false)
-    private LocalDateTime arrival;
-
     @Enumerated(EnumType.STRING)
     private DestinationPoint startPoint;
 
