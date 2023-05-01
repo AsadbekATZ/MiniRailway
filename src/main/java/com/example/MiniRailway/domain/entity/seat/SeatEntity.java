@@ -27,10 +27,6 @@ public class SeatEntity extends BaseEntity {
     @Column(nullable = false)
     private int seatNumber;
 
-    @Column(nullable = false)
-    @Positive()
-    private Double price;
-
     @ManyToOne(cascade = CascadeType.ALL)
     private TrainEntity train;
 }

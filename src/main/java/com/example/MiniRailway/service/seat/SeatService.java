@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class SeatServiceImpl implements BaseService<SeatDto, SeatEntity> {
+public class SeatService implements BaseService<SeatDto, SeatEntity> {
 
     private final SeatRepository seatRepository;
 
@@ -56,15 +56,5 @@ public class SeatServiceImpl implements BaseService<SeatDto, SeatEntity> {
 
     public List<SeatEntity> emptySeats(UUID trainId) {
         return null;
-    }
-
-    public void updateSeatPrice(Double price, UUID seatId) {
-        try {
-            Optional<SeatEntity> seat = seatRepository.findById(seatId);
-            seat.get().setPrice(price);
-            seatRepository.save(seat.get());
-        } catch (Exception e){
-            throw new NotFoundException("This seat does not exists!");
-        }
     }
 }

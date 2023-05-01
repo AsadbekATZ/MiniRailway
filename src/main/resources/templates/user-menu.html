@@ -71,33 +71,93 @@
 </nav>
 
 <!-- Search bar -->
-<form class="mt-[8%] px-[25%]">
+<form class="mt-[15vh] px-[25%]">
   <div class="flex">
 
-    <select id="from" class="text-white bg-transparent border-2 border-white hover:bg-white hover:text-[#212529] transition text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400">
+    <select id="from" class="text-white bg-transparent border-2 border-r-transparent border-white rounded-l-lg hover:bg-white hover:text-[#212529] transition text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400">
       <option value="ALL" selected>From</option>
-      <option value="US">Andijan</option>
-      <option value="CA">Canada</option>
-      <option value="FR">France</option>
-      <option value="DE">Germany</option>
+      <option value="ANDIJAN">ANDIJAN</option>
+      <option value="FERGANA">FERGANA</option>
+      <option value="NAMANGAN">NAMANGAN</option>
+      <option value="TASHKENT">TASHKENT</option>
+      <option value="SIRDARYA">SIRDARYA</option>
+      <option value="JIZZAKH">JIZZAKH</option>
+      <option value="SAMARKAND">SAMARKAND</option>
+      <option value="KASHKADARYA">KASHKADARYA</option>
+      <option value="SURKHANDARYA">SURKHANDARYA</option>
+      <option value="BUKHARA">BUKHARA</option>
+      <option value="NAVOI">NAVOI</option>
+      <option value="KHOREZM">KHOREZM</option>
+      <option value="NUKUS">NUKUS</option>
     </select>
-    <select id="to" class="ml-5 text-white bg-transparent border-2 border-white hover:bg-white hover:text-[#212529] transition text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400">
-      <option value="ALL" selected>To</option>
-      <option value="US">United States</option>
-      <option value="CA">Canada</option>
-      <option value="FR">France</option>
-      <option value="DE">Germany</option>
+    <select id="to" class="text-white bg-transparent border-2 border-r-transparent border-white hover:bg-white hover:text-[#212529] transition text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400">
+      <option value="ALL" selected>From</option>
+      <option value="ANDIJAN">ANDIJAN</option>
+      <option value="FERGANA">FERGANA</option>
+      <option value="NAMANGAN">NAMANGAN</option>
+      <option value="TASHKENT">TASHKENT</option>
+      <option value="SIRDARYA">SIRDARYA</option>
+      <option value="JIZZAKH">JIZZAKH</option>
+      <option value="SAMARKAND">SAMARKAND</option>
+      <option value="KASHKADARYA">KASHKADARYA</option>
+      <option value="SURKHANDARYA">SURKHANDARYA</option>
+      <option value="BUKHARA">BUKHARA</option>
+      <option value="NAVOI">NAVOI</option>
+      <option value="KHOREZM">KHOREZM</option>
+      <option value="NUKUS">NUKUS</option>
     </select>
-    <input type="date" value="2023-01-01" class="ml-5 text-white w-full bg-transparent border-2 border-white hover:bg-white hover:text-[#212529] transition">
-
-    <button type="submit" class="p-2.5 text-sm font-medium text-white bg-transparent border-2 border-white hover:bg-white hover:text-[#162938] rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+    <select id="class" class="text-white bg-transparent border-2 border-r-transparent border-white hover:bg-white hover:text-[#212529] transition text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400">
+      <option value="ALL" selected>Class</option>
+      <option value="BUSINESS">BUSINESS</option>
+      <option value="STANDARD">STANDARD</option>
+      <option value="ECONOMY">ECONOMY</option>
+    </select>
+    <input type="date" value="2023-01-01" class="text-white w-full bg-transparent border-2 border-r-transparent border-white hover:bg-white hover:text-[#212529] transition">
+    <button type="submit" class="p-2.5 text-sm font-medium text-white bg-transparent border-2 border-white hover:bg-white hover:text-[#162938] rounded-r-lg border focus:ring-4 focus:outline-none focus:ring-blue-800">
       <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
       <span class="sr-only">Search</span>
     </button>
   </div>
 </form>
 
-
+<!-- Train table -->
+<div class="overflow-x-auto mt-[5vh] px-10">
+  <table class="w-full text-sm text-left text-gray-100">
+    <thead class="text-xs uppercase bg-gray-700 text-gray-400">
+    <tr>
+      <th scope="col" class="px-10 py-3">Train</th>
+      <th scope="col" class="px-10 py-3">Departure</th>
+      <th scope="col" class="px-10 py-3">Arrival</th>
+      <th scope="col" class="px-10 py-3">Seats available</th>
+      <th scope="col" class="px-[20px] py-3">Train class</th>
+      <th scope="col" class="px-[20px] py-3">Price</th>
+      <th scope="col" class="py-3">
+        <span class="sr-only">Update</span>
+      </th>
+      <th scope="col" class="px-4 py-3">
+        <span class="sr-only">Delete</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody th:each="">
+    <tr class="border-b border-gray-700">
+      <th scope="row" class="px-10 py-3 font-medium whitespace-nowrap text-white" th:text=""></th>
+      <td class="px-10 py-3" th:text=""></td>
+      <td class="px-10 py-3" th:text=""></td>
+      <td class="px-10 py-3" th:text=""></td>
+      <td class="px-[20px] py-3" th:text=""></td>
+      <td class="py-3 flex items-center justify-end">
+        <!-- Select button -->
+        <a th:href="@{|/trains/select/${}|}">
+          <button type="button" class="mx-5 text-white inline-flex items-center focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-gray-600 hover:bg-gray-700 focus:ring-primary-800">
+            Select train
+          </button>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 
 <!-- Balance fill modal -->
 <div id="balance-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -121,6 +181,7 @@
     </div>
   </div>
 </div>
+
 <!-- Message -->
 <div class="w-[30rem] absolute text-xl text-white top-5 left-0 right-0 ml-auto mr-auto text-center" th:if="${message != null}">
   <div id="loginAlert" class="font-bold flex p-4 mb-4 text-sm rounded-lg bg-[#162938] text-red-600" role="alert">

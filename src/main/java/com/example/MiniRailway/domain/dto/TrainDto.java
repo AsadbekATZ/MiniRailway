@@ -3,6 +3,8 @@ package com.example.MiniRailway.domain.dto;
 import com.example.MiniRailway.domain.entity.seat.SeatEntity;
 import com.example.MiniRailway.domain.entity.train.DestinationPoint;
 import com.example.MiniRailway.domain.entity.train.TrainClass;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +19,7 @@ import java.util.List;
 @Setter
 public class TrainDto {
     private String name;
+    private Double price;
     private List<SeatEntity> seats;
     private LocalDateTime departure;
     private LocalDateTime arrival;

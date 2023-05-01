@@ -4,6 +4,7 @@ import com.example.MiniRailway.domain.entity.BaseEntity;
 import com.example.MiniRailway.domain.entity.seat.SeatEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,10 @@ public class TrainEntity extends BaseEntity {
     @Column(unique = true, nullable = false)
     @NotBlank
     private String name;
+
+    @Column(nullable = false)
+    @Positive()
+    private Double price;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "train")
     private List<SeatEntity> seats;
