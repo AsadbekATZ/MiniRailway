@@ -12,5 +12,4 @@ import java.util.UUID;
 public interface SeatRepository extends JpaRepository<SeatEntity, UUID> {
 
     Optional<SeatEntity> findBySeatNumber(Integer seatNumber);
-
 }

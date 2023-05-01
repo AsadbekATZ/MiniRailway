@@ -19,5 +19,4 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
     @Transactional
     @Query("update users u set u.balance=:balance where u.id=:id")
     void fillBalance(Double balance, UUID id);
-
 }
