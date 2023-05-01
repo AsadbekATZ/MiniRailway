@@ -20,4 +20,6 @@ public class RailwayExceptionHandler extends ResponseEntityExceptionHandler {
         model.addAttribute("message", e.getMessage());
         return "auth";
     }
+
+
 }
