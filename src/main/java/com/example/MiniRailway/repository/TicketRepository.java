@@ -18,5 +18,4 @@ public interface TicketRepository extends JpaRepository<TicketEntity, UUID> {
 
     @Query("select t from tickets t where t.seat.train.departure=:date")
     List<TrainEntity> findByTime(LocalDateTime date);
-
 }
