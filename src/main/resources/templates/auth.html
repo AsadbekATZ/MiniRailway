@@ -12,7 +12,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="font-['Poppins'] overflow-hidden">
-
 <!-- text-primary-color-[#162938] -->
 
 <section class="bg-[#a8dadc80]">
@@ -28,7 +27,7 @@
         <div id="login-form" class="hidden w-full bg-transparent border border-2 border-white/50 backdrop-blur-[20px] shadow shadow-[0_0_30px_rgba(0,0,0,0.5)] rounded-[20px] shadow sm:max-w-md xl:p-0">
             <h1 class="text-center text-3xl mt-10 font-bold">Login</h1>
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <form class="space-y-10" th:action="@{/login}" method="post" th:object="${UserCreateDto}">
+                <form id="l-form" class="space-y-10" th:action="@{/login}" method="post">
                     <div class="relative z-0 w-full mb-6 group">
                         <input type="text" name="username" id="login_username" class="block py-2.5 pr-[3rem] text-xl px-0 w-full bg-transparent border-0 border-b-2 appearance-none text-[#162938] border-[#162938] focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required />
                         <label for="login_username" class="peer-focus:font-medium absolute text-xl text-[#162938] duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Username</label>
@@ -49,7 +48,7 @@
         <div id="register-form" class="w-full bg-transparent border border-2 border-white/50 backdrop-blur-[20px] shadow shadow-[0_0_30px_rgba(0,0,0,0.5)] rounded-[20px] shadow sm:max-w-md xl:p-0">
             <h1 class="text-center text-3xl mt-10 font-bold">Register</h1>
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <form class="space-y-10" th:action="@{/}" method="post" th:object="${UserCreateDto}">
+                <form id="r-form" class="space-y-10" th:action="@{/}" method="post">
                     <div class="relative z-0 w-full mb-6 group">
                         <input type="text" name="fullName" id="register_fullName" class="block py-2.5 pr-[3rem] text-xl px-0 w-full bg-transparent border-0 border-b-2 appearance-none text-[#162938] border-[#162938] focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required />
                         <label for="register_fullName" class="peer-focus:font-medium absolute text-xl text-[#162938] duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">Full name</label>
@@ -84,10 +83,38 @@
 </section>
 
 <!-- Loading spinner -->
-<div class="backdrop-blur-[20px]">
-    <div class="lds-ripple absolute right-0 left-0 mx-auto z-10 w-0 rotate-90 -translate-y-[60vh]"><div></div><div></div></div>
-</div>
+<div id="loader" class="hidden lds-ripple absolute right-0 left-0 mx-auto z-10 w-0 rotate-90 -translate-y-[60vh]"><div></div><div></div></div>
 
+<script type="text/javascript">
+    const lForm = document.getElementById('l-form');
+    const rForm = document.getElementById('r-form');
+    const loader = document.getElementById('loader');
+
+    lForm.addEventListener('submit', (event) => {
+        // Prevent form submission
+        event.preventDefault();
+
+        // Show loader
+        loader.classList.remove('hidden');
+
+        // Submit the form after 2 seconds (for demo purposes only)
+        setTimeout(() => {
+            lForm.submit();
+        }, 2000);
+    });
+    rForm.addEventListener('submit', (event) => {
+        // Prevent form submission
+        event.preventDefault();
+
+        // Show loader
+        loader.classList.remove('hidden');
+
+        // Submit the form after 2 seconds (for demo purposes only)
+        setTimeout(() => {
+            rForm.submit();
+        }, 2000);
+    });
+</script>
 <script type="text/javascript">
     const loginForm = document.getElementById("login-form");
     const registerForm = document.getElementById("register-form");

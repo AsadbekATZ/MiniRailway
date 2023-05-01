@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>User Menu</title>
+  <link th:href="@{/css/loader.css}" rel="stylesheet">
   <script src="https://kit.fontawesome.com/12f987d29c.js" crossorigin="anonymous"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/12f987d29c.js" crossorigin="anonymous"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
 </head>
@@ -22,7 +22,7 @@
       <i class="fa-solid fa-house"></i>
     </a>
     <div class="flex md:order-2">
-      <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full p-2 border-2 border-white rounded-lg md:w-auto text-white hover:bg-white hover:text-[#162938] transition"><i class="fa-regular fa-circle-user mr-2"></i>Asadbek Ziyodullayev</button>
+      <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full p-2 border-2 border-white rounded-lg md:w-auto text-white hover:bg-white hover:text-[#162938] transition"><i class="fa-regular fa-circle-user mr-2"></i><th:block th:text="${currentUser.getFullName()}"/></button>
       <!-- Dropdown menu -->
       <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y rounded-lg shadow w-44 divide-[#162938]">
         <ul class="py-2 text-sm text-black" aria-labelledby="dropdownLargeButton">
@@ -71,10 +71,10 @@
 </nav>
 
 <!-- Search bar -->
-<form class="mt-[15vh] px-[25%]">
+<form id="search-form" class="mt-[15vh] px-[25%]">
   <div class="flex">
 
-    <select id="from" class="text-white bg-transparent border-2 border-r-transparent border-white rounded-l-lg hover:bg-white hover:text-[#212529] transition text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400">
+    <select id="from" required class="text-white bg-transparent border-2 border-r-transparent border-white rounded-l-lg hover:bg-white hover:text-[#212529] transition text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400">
       <option value="ALL" selected>From</option>
       <option value="ANDIJAN">ANDIJAN</option>
       <option value="FERGANA">FERGANA</option>
@@ -91,7 +91,7 @@
       <option value="NUKUS">NUKUS</option>
     </select>
     <select id="to" class="text-white bg-transparent border-2 border-r-transparent border-white hover:bg-white hover:text-[#212529] transition text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400">
-      <option value="ALL" selected>From</option>
+      <option value="ALL" selected>To</option>
       <option value="ANDIJAN">ANDIJAN</option>
       <option value="FERGANA">FERGANA</option>
       <option value="NAMANGAN">NAMANGAN</option>
@@ -121,35 +121,33 @@
 </form>
 
 <!-- Train table -->
-<div class="overflow-x-auto mt-[5vh] px-10">
-  <table class="w-full text-sm text-left text-gray-100">
-    <thead class="text-xs uppercase bg-gray-700 text-gray-400">
+<div class="overflow-x-auto mt-[5vh] px-20">
+  <table class="w-full text-sm text-left text-white">
+    <thead class="text-xs uppercase bg-black text-white">
     <tr>
       <th scope="col" class="px-10 py-3">Train</th>
       <th scope="col" class="px-10 py-3">Departure</th>
       <th scope="col" class="px-10 py-3">Arrival</th>
       <th scope="col" class="px-10 py-3">Seats available</th>
-      <th scope="col" class="px-[20px] py-3">Train class</th>
+      <th scope="col" class="px-10 py-3">Train class</th>
       <th scope="col" class="px-[20px] py-3">Price</th>
       <th scope="col" class="py-3">
-        <span class="sr-only">Update</span>
-      </th>
-      <th scope="col" class="px-4 py-3">
-        <span class="sr-only">Delete</span>
+        <span class="sr-only">View</span>
       </th>
     </tr>
     </thead>
-    <tbody th:each="">
+    <tbody th:each="user: ${currentUser.getTickets()}">
     <tr class="border-b border-gray-700">
-      <th scope="row" class="px-10 py-3 font-medium whitespace-nowrap text-white" th:text=""></th>
-      <td class="px-10 py-3" th:text=""></td>
-      <td class="px-10 py-3" th:text=""></td>
-      <td class="px-10 py-3" th:text=""></td>
-      <td class="px-[20px] py-3" th:text=""></td>
+      <th scope="row" class="px-10 py-3 font-medium whitespace-nowrap text-white" th:text="">AFB089</th>
+      <td class="px-10 py-3" th:text="">27/04/2023</td>
+      <td class="px-10 py-3" th:text="">27/04/2023</td>
+      <td class="px-10 py-3" th:text="">34/50</td>
+      <td class="px-10 py-3" th:text="">Business</td>
+      <td class="px-[20px] py-3" th:text="">$200</td>
       <td class="py-3 flex items-center justify-end">
         <!-- Select button -->
-        <a th:href="@{|/trains/select/${}|}">
-          <button type="button" class="mx-5 text-white inline-flex items-center focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-gray-600 hover:bg-gray-700 focus:ring-primary-800">
+        <a th:href="@{|/trains/select/${ds}|}">
+          <button type="button" class="mx-5 text-white bg-transparent border-2 border-white hover:bg-white hover:text-[#162938] transition inline-flex items-center focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center focus:ring-primary-800">
             Select train
           </button>
         </a>
@@ -169,12 +167,13 @@
         <span class="sr-only">Close modal</span>
       </button>
       <div class="px-6 py-6 lg:px-8">
-        <h3 class="mb-4 pr-5 text-xl font-bold text-white">Your current balance is: $2121324.4</h3>
-        <form class="space-y-6" action="#">
+        <h3 class="mb-4 pr-5 text-xl font-bold text-white">Your current balance is: <th:block th:text="${currentUser.getBalance()}"/></h3>
+        <form class="space-y-6" th:action="@{/user/fill-balance}" method="post">
           <div>
             <label for="amount" class="block mb-2 text-sm font-medium text-white">Enter amount you want to add</label>
-            <input min="1" max="100000000" type="number" name="amount" id="amount" class="border text-md rounded-lg focus:ring-[#8ecae6] focus:border-[#8ecae6] block w-full p-2.5 bg-white border-white placeholder-gray-400" placeholder="amount" required>
+            <input min="1" max="100000000" type="number" name="amount" id="amount" class="border text-md rounded-lg focus:ring-[#8ecae6] focus:border-[#8ecae6] block w-full p-2.5 bg-white border-white placeholder-gray-400" placeholder="amount" required="required">
           </div>
+          <input name="userId" type="hidden" th:value="${currentUser.getId()}">
           <button type="submit" class="w-full focus:ring-4 text-white focus:outline-none font-bold rounded-lg text-md px-5 py-2.5 text-center bg-transparent border-2 border-white hover:bg-white hover:text-[#162938] transition focus:ring-blue-800">Fill my balance</button>
         </form>
       </div>
@@ -182,9 +181,22 @@
   </div>
 </div>
 
+<!-- Not found alert -->
+<div id="alert-2" class="absolute left-0 right-0 w-[80vw] mx-auto flex p-4 mb-4 rounded-lg bg-white text-black" role="alert">
+  <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+  <span class="sr-only">Info</span>
+  <div class="ml-3 text-sm font-bold">
+    No any matching results were found!.
+  </div>
+  <button type="button" class="ml-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 p-1.5 inline-flex h-8 w-8 bg-white text-black hover:bg-black hover:text-white" data-dismiss-target="#alert-2" aria-label="Close">
+    <span class="sr-only">Close</span>
+    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+  </button>
+</div>
+
 <!-- Message -->
-<div class="w-[30rem] absolute text-xl text-white top-5 left-0 right-0 ml-auto mr-auto text-center" th:if="${message != null}">
-  <div id="loginAlert" class="font-bold flex p-4 mb-4 text-sm rounded-lg bg-[#162938] text-red-600" role="alert">
+<div class="w-[30rem] absolute text-xl text-white top-[15vh] left-0 right-0 ml-auto mr-auto text-center" th:if="${message != null}">
+  <div id="loginAlert" class="font-bold flex p-4 mb-4 text-sm rounded-lg bg-white text-green-800" role="alert">
     <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
     <span class="sr-only">Info</span>
     <div th:text="${message}">
@@ -192,6 +204,26 @@
   </div>
 </div>
 
+<!-- Loading spinner -->
+<div id="loader" class="hidden lds-ripple absolute right-0 left-0 mx-auto z-999 w-0 rotate-90 -translate-y-[60vh]"><div></div><div></div></div>
+
+<script type="text/javascript">
+  const searchForm = document.getElementById('search-form');
+  const loader = document.getElementById('loader');
+
+  searchForm.addEventListener('submit', (event) => {
+    // Prevent form submission
+    event.preventDefault();
+
+    // Show loader
+    loader.classList.remove('hidden');
+
+    // Submit the form after 2 seconds (for demo purposes only)
+    setTimeout(() => {
+      searchForm.submit();
+    }, 2000);
+  });
+</script>
 <script type="text/javascript">
   // Fade out the alert after 3 seconds
   setTimeout(function() {
