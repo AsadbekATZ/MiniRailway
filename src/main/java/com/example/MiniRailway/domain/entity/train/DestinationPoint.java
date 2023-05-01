@@ -16,7 +16,7 @@ public enum DestinationPoint {
     BUKHARA(10),
     NAVOI(11),
     KHOREZM(12),
-    KARAKALPALSTAN(13);
+    NUKUS(13);
 
     private final int value;
 
