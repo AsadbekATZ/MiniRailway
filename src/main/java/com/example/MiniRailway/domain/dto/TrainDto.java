@@ -22,7 +22,6 @@ public class TrainDto {
     private Double price;
     private List<SeatEntity> seats;
     private LocalDateTime departure;
-    private LocalDateTime arrival;
     private DestinationPoint startPoint;
     private DestinationPoint endPoint;
     private TrainClass trainClass;

@@ -20,6 +20,9 @@ public class TicketEntity extends BaseEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     private UserEntity user;
 
+    @Column(nullable = false)
+    private String passenger;
+
     @OneToOne(mappedBy = "ticket")
     private SeatEntity seat;
 }
