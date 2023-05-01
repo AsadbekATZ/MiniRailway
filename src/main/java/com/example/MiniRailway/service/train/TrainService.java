@@ -11,10 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +33,6 @@ public class TrainService implements BaseService<TrainDto, TrainEntity> {
 
     @Override
     public void delete(UUID id) {
-
     }
 
     @Override
@@ -89,11 +85,17 @@ public class TrainService implements BaseService<TrainDto, TrainEntity> {
         }
         return reverseDestinationTrains;
     }
-
-
-
     @Override
     public List<TrainEntity> getAll() {
         return trainRepository.findAll();
+    }
+
+    public HashMap<UUID, LocalDateTime> getArrivalTime(LocalDateTime departure, DestinationPoint startPoint, DestinationPoint endPoint){
+        HashMap<UUID, LocalDateTime> getArrivalTime = new HashMap<>();
+        int distance = Math.abs(startPoint.getValue() - endPoint.getValue());
+        for (TrainEntity trainEntity : trainRepository.findAll()) {
+            getArrivalTime.put(trainEntity.getId(), trainEntity.getDeparture().plusHours(distance));
+        }
+        return getArrivalTime;
     }
 }
