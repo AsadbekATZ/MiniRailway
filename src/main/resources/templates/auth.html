@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <script src="https://kit.fontawesome.com/12f987d29c.js" crossorigin="anonymous"></script>
+    <link th:href="@{/css/loader.css}" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/12f987d29c.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
 </head>
 <body class="font-['Poppins'] overflow-hidden">
 
@@ -73,7 +73,7 @@
             </div>
         </div>
     </div>
-    <div class="w-[30rem] absolute text-xl text-white top-5 left-0 right-0 ml-auto mr-auto text-center" th:if="${message != null}">
+    <div class="w-[30rem] absolute text-xl text-white top-5 left-0 right-0 mx-auto text-center" th:if="${message != null}">
         <div id="loginAlert" class="font-bold flex p-4 mb-4 text-sm rounded-lg bg-[#162938] text-red-600" role="alert">
             <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
             <span class="sr-only">Info</span>
@@ -83,6 +83,10 @@
     </div>
 </section>
 
+<!-- Loading spinner -->
+<div class="backdrop-blur-[20px]">
+    <div class="lds-ripple absolute right-0 left-0 mx-auto z-10 w-0 rotate-90 -translate-y-[60vh]"><div></div><div></div></div>
+</div>
 
 <script type="text/javascript">
     const loginForm = document.getElementById("login-form");
