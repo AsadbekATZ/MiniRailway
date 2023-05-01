@@ -12,6 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TicketDto {
-    UserEntity user;
-    SeatEntity seat;
+    private UserEntity user;
+    private String passenger;
+    private SeatEntity seat;
 }

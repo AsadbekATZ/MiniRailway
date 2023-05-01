@@ -30,7 +30,6 @@ public class TicketService implements BaseService<TicketDto, TicketEntity> {
         } catch (Exception e) {
             throw new AlreadyExistsException("Ticket already exists");
         }
-//        ticketRepository.save(modelMapper.map(createDto, TicketEntity.class));
     }
 
     @Override
@@ -53,8 +52,8 @@ public class TicketService implements BaseService<TicketDto, TicketEntity> {
             throw new NotFoundException("no ticket this id");
         });
         modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
-    modelMapper.map(createDto, ticket);
-    ticketRepository.save(ticket);
+        modelMapper.map(createDto, ticket);
+        ticketRepository.save(ticket);
     }
 
     @Override
