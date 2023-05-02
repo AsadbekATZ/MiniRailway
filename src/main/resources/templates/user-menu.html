@@ -45,11 +45,14 @@
     <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
       <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium md:flex-row md:space-x-8 md:mt-0">
         <li>
-<!--          <a th:href="@{|/products/${'TV'}|}">-->
+          <button onclick="allTr()" class="block text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-sm px-5 py-2.5 text-center bg-transparent border-2 border-white hover:bg-white hover:text-[#212529] transition focus:ring-gray-800" type="button">
+            All
+          </button>
+        </li>
+        <li>
             <button onclick="busTr()" class="block text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-sm px-5 py-2.5 text-center bg-transparent border-2 border-white hover:bg-white hover:text-[#212529] transition focus:ring-gray-800" type="button">
               Business class
             </button>
-<!--          </a>-->
         </li>
         <li>
             <button onclick="staTr()" class="block text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-sm px-5 py-2.5 text-center bg-transparent border-2 border-white hover:bg-white hover:text-[#212529] transition focus:ring-gray-800" type="button">
@@ -143,7 +146,7 @@
       <td class="px-[20px] py-3" th:text="'$' + ${train.getPrice()}"></td>
       <td class="py-3 flex items-center justify-end">
         <!-- Select button -->
-        <a th:href="@{|/train-edit/${train.getId()}|}">
+        <a th:href="@{|/trains/train-edit/${train.getId()}|}">
           <button type="button" class="mx-5 text-white bg-transparent border-2 border-white hover:bg-white hover:text-[#162938] transition inline-flex items-center focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center focus:ring-primary-800">
             Select train
           </button>
@@ -173,7 +176,7 @@
     <tbody th:each="train: ${allTrains}">
     <tr class="border-b border-gray-700" th:if="${train.getTrainClass().name() == 'BUSINESS'}">
       <th scope="row" class="px-10 py-3 font-medium whitespace-nowrap text-white" th:text="${train.getName()}"></th>
-      <td class="px-10 py-3" th:text="${train.getDeparture()}"></td>
+      <td class="px-10 py-3" th:text="${train.getDeparture().getYear() + '/' + train.getDeparture().getMonthValue() + '/' + train.getDeparture().getDayOfMonth() + ' ' + train.getDeparture().getHour() + ':' + train.getDeparture().getMinute()}"></td>
       <td class="px-10 py-3" th:if="${getArrivalTime.isEmpty()}"> ---- </td>
       <td class="px-10 py-3" th:if="${!getArrivalTime.isEmpty()}"><th:block th:text="getArrivalTime.get(train.getId())"/></td>
       <td class="px-10 py-3" th:text="${train.getSeats().size()}"></td>
@@ -211,7 +214,7 @@
     <tbody th:each="train: ${allTrains}">
     <tr class="border-b border-gray-700" th:if="${train.getTrainClass().name() == 'STANDARD'}">
       <th scope="row" class="px-10 py-3 font-medium whitespace-nowrap text-white" th:text="${train.getName()}"></th>
-      <td class="px-10 py-3" th:text="${train.getDeparture()}"></td>
+      <td class="px-10 py-3" th:text="${train.getDeparture().getYear() + '/' + train.getDeparture().getMonthValue() + '/' + train.getDeparture().getDayOfMonth() + ' ' + train.getDeparture().getHour() + ':' + train.getDeparture().getMinute()}"></td>
       <td class="px-10 py-3" th:if="${getArrivalTime.isEmpty()}"> ---- </td>
       <td class="px-10 py-3" th:if="${!getArrivalTime.isEmpty()}"><th:block th:text="getArrivalTime.get(train.getId())"/></td>
       <td class="px-10 py-3" th:text="${train.getSeats().size()}"></td>
@@ -326,10 +329,10 @@
   const standardTrains = document.getElementById("standardTrains");
   const economyTrains = document.getElementById("economyTrains");
   function allTr() {
-    allTrains.classList.remove("hidden");
-    businessTrains.classList.add("hidden");
-    standardTrains.classList.add("hidden");
-    economyTrains.classList.add("hidden");
+    allTrains.style.display = "block";
+    businessTrains.style.display = "none";
+    standardTrains.style.display = "none";
+    economyTrains.style.display = "none";
   }
   function busTr() {
     allTrains.style.display = "none";

@@ -1,8 +1,10 @@
 package com.example.MiniRailway.service.ticket;
 import com.example.MiniRailway.domain.dto.TicketDto;
+import com.example.MiniRailway.domain.entity.seat.SeatEntity;
 import com.example.MiniRailway.domain.entity.ticket.TicketEntity;
 import com.example.MiniRailway.exception.AlreadyExistsException;
 import com.example.MiniRailway.exception.NotFoundException;
+import com.example.MiniRailway.repository.SeatRepository;
 import com.example.MiniRailway.repository.TicketRepository;
 import com.example.MiniRailway.service.BaseService;
 import lombok.RequiredArgsConstructor;
@@ -69,14 +71,4 @@ public class TicketService implements BaseService<TicketDto, TicketEntity> {
     public List<TicketEntity> getAll() {
         return ticketRepository.findAll();
     }
-
-
-//    public List<TrainEntity> findByDestination(DestinationPoint pontA, DestinationPoint pontB) {
-//        return ticketRepository.findByDestination(pontA, pontB);
-//    }
-//
-//
-//    public List<TrainEntity> findByTime(LocalDateTime date) {
-//        return ticketRepository.findByTime(date);
-//    }
 }

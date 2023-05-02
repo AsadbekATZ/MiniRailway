@@ -1,11 +1,14 @@
 package com.example.MiniRailway.service.train;
+import com.example.MiniRailway.domain.dto.SeatDto;
 import com.example.MiniRailway.domain.dto.TrainDto;
+import com.example.MiniRailway.domain.entity.seat.SeatEntity;
 import com.example.MiniRailway.domain.entity.train.DestinationPoint;
 import com.example.MiniRailway.domain.entity.train.TrainEntity;
 import com.example.MiniRailway.exception.AlreadyExistsException;
 import com.example.MiniRailway.exception.NotFoundException;
 import com.example.MiniRailway.repository.TrainRepository;
 import com.example.MiniRailway.service.BaseService;
+import com.example.MiniRailway.service.seat.SeatService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -19,11 +22,19 @@ public class TrainService implements BaseService<TrainDto, TrainEntity> {
 
     private final TrainRepository trainRepository;
 
+    private final SeatService seatService;
+
     private final ModelMapper modelMapper;
 
     @Override
     public void save(TrainDto createDto) {
         TrainEntity train = modelMapper.map(createDto, TrainEntity.class);
+        List<SeatEntity> seats = new ArrayList<>();
+        for (int i = 60; i > 0; i--) {
+            SeatDto seatDto = new SeatDto(null, i, train);
+            seats.add(modelMapper.map(seatDto, SeatEntity.class));
+        }
+        train.setSeats(seats);
         try {
             trainRepository.save(train);
         }catch (Exception e){
@@ -90,10 +101,10 @@ public class TrainService implements BaseService<TrainDto, TrainEntity> {
         return trainRepository.findAll();
     }
 
-    public HashMap<UUID, LocalDateTime> getArrivalTime(LocalDateTime departure, DestinationPoint startPoint, DestinationPoint endPoint){
+    public HashMap<UUID, LocalDateTime> getArrivalTime(DestinationPoint endPoint){
         HashMap<UUID, LocalDateTime> getArrivalTime = new HashMap<>();
-        int distance = Math.abs(startPoint.getValue() - endPoint.getValue());
         for (TrainEntity trainEntity : trainRepository.findAll()) {
+            int distance = Math.abs(trainEntity.getStartPoint().getValue() - endPoint.getValue());
             getArrivalTime.put(trainEntity.getId(), trainEntity.getDeparture().plusHours(distance));
         }
         return getArrivalTime;
