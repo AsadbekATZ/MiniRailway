@@ -12,4 +12,8 @@ import java.util.UUID;
 public interface SeatRepository extends JpaRepository<SeatEntity, UUID> {
 
     Optional<SeatEntity> findBySeatNumber(Integer seatNumber);
+
+    List<SeatEntity> findByTrainName(String trainNumber);
+    SeatEntity findByTrainIdAndSeatNumber(UUID trainId, int seatNumber);
+    List<SeatEntity> findByTrainId(UUID trainId);
 }
