@@ -41,7 +41,10 @@ public class AuthController {
             model.addAttribute("allTrains", trainService.getAll());
             model.addAttribute("getArrivalTime", new HashMap<>());
             return "user-menu";
+        } else {
+            model.addAttribute("allTrains", trainService.getAll());
+            model.addAttribute("getArrivalTime", new HashMap<>());
+            return "admin-trains";
         }
-        return "auth";
     }
 }

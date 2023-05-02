@@ -45,23 +45,9 @@
     <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
       <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium md:flex-row md:space-x-8 md:mt-0">
         <li>
-          <a th:href="@{|/products/${'TV'}|}">
+          <a th:href="@{/trains/all}">
             <button class="block text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-sm px-5 py-2.5 text-center bg-transparent border-2 border-white hover:bg-white hover:text-[#212529] transition focus:ring-gray-800" type="button">
-              Business class
-            </button>
-          </a>
-        </li>
-        <li>
-          <a th:href="@{|/products/${'TV'}|}">
-            <button class="block text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-sm px-5 py-2.5 text-center bg-transparent border-2 border-white hover:bg-white hover:text-[#212529] transition focus:ring-gray-800" type="button">
-              Standard class
-            </button>
-          </a>
-        </li>
-        <li>
-          <a th:href="@{|/products/${'TV'}|}">
-            <button class="block text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-sm px-5 py-2.5 text-center bg-transparent border-2 border-white hover:bg-white hover:text-[#212529] transition focus:ring-gray-800" type="button">
-              Economy class
+              Back to trains list
             </button>
           </a>
         </li>
@@ -70,129 +56,54 @@
   </div>
 </nav>
 
-<!-- Search bar -->
-<form id="search-form" class="mt-[15vh] px-[25%]">
-  <div class="flex">
-
-    <select id="from" required class="text-white bg-transparent border-2 border-r-transparent border-white rounded-l-lg hover:bg-white hover:text-[#212529] transition text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400">
-      <option value="ALL" selected>From</option>
-      <option value="ANDIJAN">ANDIJAN</option>
-      <option value="FERGANA">FERGANA</option>
-      <option value="NAMANGAN">NAMANGAN</option>
-      <option value="TASHKENT">TASHKENT</option>
-      <option value="SIRDARYA">SIRDARYA</option>
-      <option value="JIZZAKH">JIZZAKH</option>
-      <option value="SAMARKAND">SAMARKAND</option>
-      <option value="KASHKADARYA">KASHKADARYA</option>
-      <option value="SURKHANDARYA">SURKHANDARYA</option>
-      <option value="BUKHARA">BUKHARA</option>
-      <option value="NAVOI">NAVOI</option>
-      <option value="KHOREZM">KHOREZM</option>
-      <option value="NUKUS">NUKUS</option>
-    </select>
-    <select id="to" class="text-white bg-transparent border-2 border-r-transparent border-white hover:bg-white hover:text-[#212529] transition text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400">
-      <option value="ALL" selected>To</option>
-      <option value="ANDIJAN">ANDIJAN</option>
-      <option value="FERGANA">FERGANA</option>
-      <option value="NAMANGAN">NAMANGAN</option>
-      <option value="TASHKENT">TASHKENT</option>
-      <option value="SIRDARYA">SIRDARYA</option>
-      <option value="JIZZAKH">JIZZAKH</option>
-      <option value="SAMARKAND">SAMARKAND</option>
-      <option value="KASHKADARYA">KASHKADARYA</option>
-      <option value="SURKHANDARYA">SURKHANDARYA</option>
-      <option value="BUKHARA">BUKHARA</option>
-      <option value="NAVOI">NAVOI</option>
-      <option value="KHOREZM">KHOREZM</option>
-      <option value="NUKUS">NUKUS</option>
-    </select>
-    <select id="class" class="text-white bg-transparent border-2 border-r-transparent border-white hover:bg-white hover:text-[#212529] transition text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 placeholder-gray-400">
-      <option value="ALL" selected>Class</option>
-      <option value="BUSINESS">BUSINESS</option>
-      <option value="STANDARD">STANDARD</option>
-      <option value="ECONOMY">ECONOMY</option>
-    </select>
-    <input type="date" value="2023-01-01" class="text-white w-full bg-transparent border-2 border-r-transparent border-white hover:bg-white hover:text-[#212529] transition">
-    <button type="submit" class="p-2.5 text-sm font-medium text-white bg-transparent border-2 border-white hover:bg-white hover:text-[#162938] rounded-r-lg border focus:ring-4 focus:outline-none focus:ring-blue-800">
-      <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-      <span class="sr-only">Search</span>
-    </button>
-  </div>
-</form>
-
-<!-- Train table -->
-<div class="overflow-x-auto mt-[5vh] px-20">
+<!-- Train panel -->
+<div class="overflow-x-auto mt-[25vh] px-[10vw] text-white">
+  <div class="text-center text-2xl font-bold">Train details</div>
+  <div class="text-xl">Choose a seat from this train</div>
   <table class="w-full text-sm text-left text-white">
     <thead class="text-xs uppercase bg-black text-white">
     <tr>
-      <th scope="col" class="px-10 py-3">Train</th>
+      <th scope="col" class="px-10 py-3">Train name</th>
       <th scope="col" class="px-10 py-3">Departure</th>
       <th scope="col" class="px-10 py-3">Arrival</th>
       <th scope="col" class="px-10 py-3">Seats available</th>
       <th scope="col" class="px-10 py-3">Train class</th>
       <th scope="col" class="px-[20px] py-3">Price</th>
-      <th scope="col" class="py-3">
-        <span class="sr-only">View</span>
-      </th>
     </tr>
     </thead>
-    <tbody th:each="train: ${allTrains}">
+    <tbody>
     <tr class="border-b border-gray-700">
-      <th scope="row" class="px-10 py-3 font-medium whitespace-nowrap text-white" th:text="${train.getName()}">AFB089</th>
-      <td class="px-10 py-3" th:text="${train.getDeparture()}"></td>
-      <td class="px-10 py-3" th:if="${getArrivalTime.isEmpty()}"> ---- </td>
-      <td class="px-10 py-3" th:if="${!getArrivalTime.isEmpty()}"><th:block th:text="getArrivalTime.get(train.getId())"/></td>
+      <th scope="row" class="px-10 py-3 font-medium whitespace-nowrap text-white" th:text="${train.getName()}"></th>
+      <td class="px-10 py-3" th:text="${train.getDeparture().getYear() + '/' + train.getDeparture().getMonthValue() + '/' + train.getDeparture().getDayOfMonth() + ' ' + train.getDeparture().getHour() + ':' + train.getDeparture().getMinute()}"></td>
+      <td class="px-10 py-3" th:text="${getArrivalTime.getYear() + '/' + getArrivalTime.getMonthValue() + '/' + getArrivalTime.getDayOfMonth() + ' ' + getArrivalTime.getHour() + ':' + getArrivalTime.getMinute()}"></td>
       <td class="px-10 py-3" th:text="${train.getSeats().size()}"></td>
       <td class="px-10 py-3" th:text="${train.getTrainClass()}"></td>
-      <td class="px-[20px] py-3" th:text="${train.getPrice()}"></td>
-      <td class="py-3 flex items-center justify-end">
-        <!-- Select button -->
-        <a th:href="@{|/train-edit/${train.getId()}|}">
-          <button type="button" class="mx-5 text-white bg-transparent border-2 border-white hover:bg-white hover:text-[#162938] transition inline-flex items-center focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center focus:ring-primary-800">
-            Select train
-          </button>
-        </a>
-      </td>
+      <td class="px-[20px] py-3" th:text="'$' + ${train.getPrice()}"></td>
     </tr>
     </tbody>
   </table>
-</div>
-
-<!-- Balance fill modal -->
-<div id="balance-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-  <div class="relative w-full max-w-md max-h-full">
-    <!-- Modal content -->
-    <div class="relative bg-[#212529] rounded-lg shadow">
-      <button type="button" class="absolute top-3 right-2.5 bg-black rounded-lg text-white text-sm p-1.5 ml-auto inline-flex items-center hover:bg-white hover:text-black" data-modal-hide="balance-modal">
-        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-        <span class="sr-only">Close modal</span>
-      </button>
-      <div class="px-6 py-6 lg:px-8">
-        <h3 class="mb-4 pr-5 text-xl font-bold text-white">Your current balance is: <th:block th:text="${currentUser.getBalance()}"/></h3>
-        <form class="space-y-6" th:action="@{/user/fill-balance}" method="post">
-          <div>
-            <label for="amount" class="block mb-2 text-sm font-medium text-white">Enter amount you want to add</label>
-            <input min="1" max="100000000" type="number" name="amount" id="amount" class="border text-md rounded-lg focus:ring-[#8ecae6] focus:border-[#8ecae6] block w-full p-2.5 bg-white border-white placeholder-gray-400" placeholder="amount" required="required">
+  <div class="p-2 border-4 border-white w-[65vw] mx-auto rounded-2xl my-10">
+    <div class="grid grid-rows-3 grid-flow-col">
+      <div th:each="seat: ${train.getSeats()}">
+        <div th:if="${seat.getTicket() == null}">
+          <a th:href="@{|/tickets/view-seat/${seat.getId()}|}">
+            <button type="submit" data-tooltip-target="tooltip-empty" class="bg-white rounded-md text-black m-2 p-1 w-[2rem] h-[2rem]" th:text="${seat.getSeatNumber()}"></button>
+          </a>
+          <div id="tooltip-empty" role="tooltip" class="absolute z-10 invisible bg-black inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip">
+            This seat is empty
+            <div class="tooltip-arrow" data-popper-arrow></div>
           </div>
-          <input name="userId" type="hidden" th:value="${currentUser.getId()}">
-          <button type="submit" class="w-full focus:ring-4 text-white focus:outline-none font-bold rounded-lg text-md px-5 py-2.5 text-center bg-transparent border-2 border-white hover:bg-white hover:text-[#162938] transition focus:ring-blue-800">Fill my balance</button>
-        </form>
+        </div>
+        <div th:if="${seat.getTicket() != null}">
+          <button type="button" data-tooltip-target="tooltip-booked" class="cursor-not-allowed rounded-md bg-red-900 text-white m-2 p-1 w-[2rem] h-[2rem]" th:text="${seat.getSeatNumber()}"></button>
+          <div id="tooltip-booked" role="tooltip" class="absolute z-10 invisible bg-black inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip">
+            Here seats <th:block th:text="${seat.getTicket().getPassenger()}"/>
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-<!-- Not found alert -->
-<div id="alert-2" class="absolute left-0 right-0 w-[80vw] mx-auto flex p-4 mb-4 rounded-lg bg-white text-black" role="alert">
-  <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-  <span class="sr-only">Info</span>
-  <div class="ml-3 text-sm font-bold">
-    No any matching results were found!.
-  </div>
-  <button type="button" class="ml-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 p-1.5 inline-flex h-8 w-8 bg-white text-black hover:bg-black hover:text-white" data-dismiss-target="#alert-2" aria-label="Close">
-    <span class="sr-only">Close</span>
-    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-  </button>
 </div>
 
 <!-- Message -->
@@ -205,26 +116,6 @@
   </div>
 </div>
 
-<!-- Loading spinner -->
-<div id="loader" class="hidden lds-ripple absolute right-0 left-0 mx-auto z-999 w-0 rotate-90 -translate-y-[60vh]"><div></div><div></div></div>
-
-<script type="text/javascript">
-  const searchForm = document.getElementById('search-form');
-  const loader = document.getElementById('loader');
-
-  searchForm.addEventListener('submit', (event) => {
-    // Prevent form submission
-    event.preventDefault();
-
-    // Show loader
-    loader.classList.remove('hidden');
-
-    // Submit the form after 2 seconds (for demo purposes only)
-    setTimeout(() => {
-      searchForm.submit();
-    }, 2000);
-  });
-</script>
 <script type="text/javascript">
   // Fade out the alert after 3 seconds
   setTimeout(function() {

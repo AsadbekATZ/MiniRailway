@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.UUID;
 
+import static com.example.MiniRailway.controller.AuthController.currentUser;
+
 @Controller
 @RequestMapping("/trains")
 @RequiredArgsConstructor
@@ -20,21 +22,18 @@ public class TrainController {
 
     @GetMapping("/all")
     public String allTrains(Model model) {
+        model.addAttribute("currentUser", currentUser);
         model.addAttribute("allTrains", trainService.getAll());
         model.addAttribute("getArrivalTime", new HashMap<>());
         return "user-menu";
     }
 
-    @PostMapping(value = "/create-trains")
-    public String createTrains(@ModelAttribute TrainDto trainDto, Model model){
-        trainService.save(trainDto);
-        model.addAttribute("message", "User successfully added!");
-        return "trains";
-    }
-
     @GetMapping(value = "/train-edit/{trainId}")
     public String details(@PathVariable(value = "trainId") UUID trainId,Model model){
-        model.addAttribute("train",trainService.getById(trainId));
+        TrainEntity train = trainService.getById(trainId);
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("train",train);
+        model.addAttribute("getArrivalTime",trainService.getArrivalTime(train.getEndPoint()).get(trainId));
         return "train-seats";
     }
 
