@@ -14,6 +14,5 @@ import lombok.Setter;
 public class SeatDto {
     private TicketEntity ticket;
     private int seatNumber;
-    private Double price;
     private TrainEntity train;
 }

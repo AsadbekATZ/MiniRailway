@@ -1,16 +1,15 @@
 package com.example.MiniRailway.service.ticket;
 import com.example.MiniRailway.domain.dto.TicketDto;
 import com.example.MiniRailway.domain.entity.ticket.TicketEntity;
-import com.example.MiniRailway.domain.entity.train.DestinationPoint;
-import com.example.MiniRailway.domain.entity.train.TrainEntity;
+import com.example.MiniRailway.exception.AlreadyExistsException;
 import com.example.MiniRailway.exception.NotFoundException;
 import com.example.MiniRailway.repository.TicketRepository;
 import com.example.MiniRailway.service.BaseService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -25,12 +24,21 @@ public class TicketService implements BaseService<TicketDto, TicketEntity> {
 
     @Override
     public void save(TicketDto createDto) {
-        ticketRepository.save(modelMapper.map(createDto, TicketEntity.class));
+        TicketEntity ticket=modelMapper.map(createDto, TicketEntity.class);
+        try {
+            ticketRepository.save(ticket);
+        } catch (Exception e) {
+            throw new AlreadyExistsException("Ticket already exists");
+        }
     }
 
     @Override
     public void delete(UUID id) {
-
+        Optional<TicketEntity> byId = ticketRepository.findById(id);
+        if(byId.isEmpty()){
+            throw new NotFoundException("This Id was not found");
+        }
+        ticketRepository.deleteById(id);
     }
 
     @Override
@@ -40,11 +48,12 @@ public class TicketService implements BaseService<TicketDto, TicketEntity> {
 
     @Override
     public void update(TicketDto createDto, UUID id) {
-        Optional<TicketEntity> ticketEntity = ticketRepository.findById(id);
-        if (ticketEntity.isEmpty()){
-            System.out.println("Don`t found");
-        }
-        ticketRepository.save(modelMapper.map(createDto,TicketEntity.class));
+        TicketEntity  ticket=ticketRepository.findById(id).orElseThrow(()->{
+            throw new NotFoundException("no ticket this id");
+        });
+        modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+        modelMapper.map(createDto, ticket);
+        ticketRepository.save(ticket);
     }
 
     @Override
@@ -62,12 +71,12 @@ public class TicketService implements BaseService<TicketDto, TicketEntity> {
     }
 
 
-    public List<TrainEntity> findByDestination(DestinationPoint pontA, DestinationPoint pontB) {
-        return ticketRepository.findByDestination(pontA, pontB);
-    }
-
-
-    public List<TrainEntity> findByTime(LocalDateTime date) {
-        return ticketRepository.findByTime(date);
-    }
+//    public List<TrainEntity> findByDestination(DestinationPoint pontA, DestinationPoint pontB) {
+//        return ticketRepository.findByDestination(pontA, pontB);
+//    }
+//
+//
+//    public List<TrainEntity> findByTime(LocalDateTime date) {
+//        return ticketRepository.findByTime(date);
+//    }
 }

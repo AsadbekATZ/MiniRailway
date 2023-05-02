@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 public class UserDto {
-    String fullName;
-    String username;
-    String password;
+    private String fullName;
+    private String username;
+    private String password;
 }

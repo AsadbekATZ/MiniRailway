@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 @Controller
@@ -20,7 +21,8 @@ public class TrainController {
     @GetMapping("/all")
     public String allTrains(Model model) {
         model.addAttribute("allTrains", trainService.getAll());
-        return "trains";
+        model.addAttribute("getArrivalTime", new HashMap<>());
+        return "user-menu";
     }
 
     @PostMapping(value = "/create-trains")
@@ -33,7 +35,7 @@ public class TrainController {
     @GetMapping(value = "/train-edit/{trainId}")
     public String details(@PathVariable(value = "trainId") UUID trainId,Model model){
         model.addAttribute("train",trainService.getById(trainId));
-        return "train-edit";
+        return "train-seats";
     }
 
     @PostMapping(value = "/edit")
