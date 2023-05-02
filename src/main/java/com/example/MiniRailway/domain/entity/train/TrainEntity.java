@@ -4,6 +4,7 @@ import com.example.MiniRailway.domain.entity.BaseEntity;
 import com.example.MiniRailway.domain.entity.seat.SeatEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,9 +21,13 @@ import java.util.List;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class TrainEntity extends BaseEntity {
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     @NotBlank
     private String name;
+
+    @Column(nullable = false)
+    @Positive()
+    private Double price;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "train")
     private List<SeatEntity> seats;
@@ -30,12 +35,12 @@ public class TrainEntity extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime departure;
 
-    @Column(nullable = false)
-    private LocalDateTime arrival;
-
     @Enumerated(EnumType.STRING)
     private DestinationPoint startPoint;
 
     @Enumerated(EnumType.STRING)
     private DestinationPoint endPoint;
+
+    @Enumerated(EnumType.STRING)
+    TrainClass trainClass;
 }

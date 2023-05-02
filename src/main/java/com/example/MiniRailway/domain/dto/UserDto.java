@@ -13,8 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 public class UserDto {
-    String username;
-    String password;
-    Double balance;
-    private List<TicketEntity> tickets;
+    private String fullName;
+    private String username;
+    private String password;
 }
