@@ -44,3 +44,6 @@
         opacity: 0;
     }
 }
+.rotate-video{
+    transform: rotateY(180deg);
+}
