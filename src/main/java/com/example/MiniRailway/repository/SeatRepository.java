@@ -1,6 +1,7 @@
 package com.example.MiniRailway.repository;
 
 import com.example.MiniRailway.domain.entity.seat.SeatEntity;
+import com.example.MiniRailway.domain.entity.user.UserEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -15,8 +16,8 @@ public interface SeatRepository extends JpaRepository<SeatEntity, UUID> {
     Optional<SeatEntity> findBySeatNumber(Integer seatNumber);
     @Modifying
     @Transactional
-    @Query("update seats s set s.ticket.id=:ticketId where s.id=:seatId")
-    void setTicketId(UUID seatId, UUID ticketId);
+    @Query("update seats s set s.user=:user, s.passengerName=:passengerName where s.id=:seatId")
+    void bookSeat(UserEntity user, String passengerName, UUID seatId);
     List<SeatEntity> findByTrainName(String trainNumber);
     SeatEntity findByTrainIdAndSeatNumber(UUID trainId, int seatNumber);
     List<SeatEntity> findByTrainId(UUID trainId);

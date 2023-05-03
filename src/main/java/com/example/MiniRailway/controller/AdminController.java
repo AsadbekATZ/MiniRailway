@@ -22,8 +22,8 @@ public class AdminController {
         trainService.save(trainDto);
         model.addAttribute("allTrains", trainService.getAll());
         model.addAttribute("getArrivalTime", new HashMap<>());
+        model.addAttribute("availableSeats",trainService.emptyTrainSeats());
         model.addAttribute("message", "Train successfully added!");
         return "admin-trains";
     }
-
 }

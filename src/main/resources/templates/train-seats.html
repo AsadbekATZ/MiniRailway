@@ -76,28 +76,28 @@
       <th scope="row" class="px-10 py-3 font-medium whitespace-nowrap text-white" th:text="${train.getName()}"></th>
       <td class="px-10 py-3" th:text="${train.getDeparture().getYear() + '/' + train.getDeparture().getMonthValue() + '/' + train.getDeparture().getDayOfMonth() + ' ' + train.getDeparture().getHour() + ':' + train.getDeparture().getMinute()}"></td>
       <td class="px-10 py-3" th:text="${getArrivalTime.getYear() + '/' + getArrivalTime.getMonthValue() + '/' + getArrivalTime.getDayOfMonth() + ' ' + getArrivalTime.getHour() + ':' + getArrivalTime.getMinute()}"></td>
-      <td class="px-10 py-3" th:text="${train.getSeats().size()}"></td>
+      <td class="px-10 py-3" th:text="${train.getSeats().size() + '/' + availableSeats.size()}"></td>
       <td class="px-10 py-3" th:text="${train.getTrainClass()}"></td>
       <td class="px-[20px] py-3" th:text="'$' + ${train.getPrice()}"></td>
     </tr>
     </tbody>
   </table>
-  <div class="p-2 border-4 border-white w-[65vw] mx-auto rounded-2xl my-10">
+  <div class="p-2 border-4 border-white mx-auto rounded-2xl my-10">
     <div class="grid grid-rows-3 grid-flow-col">
       <div th:each="seat: ${train.getSeats()}">
-        <div th:if="${seat.getTicket() == null}">
-          <a th:href="@{|/tickets/view-seat/${seat.getId()}|}">
-            <button type="submit" data-tooltip-target="tooltip-empty" class="bg-white rounded-md text-black m-2 p-1 w-[2rem] h-[2rem]" th:text="${seat.getSeatNumber()}"></button>
+        <div th:if="${seat.getPassengerName() == null}">
+          <a th:href="@{|/seats/view-seat/${seat.getId()}|}">
+            <button type="submit" th:data-tooltip-target="${'tooltip-empty' + seat.getId()}" class="bg-white rounded-md text-black m-2 p-1 w-[2rem] h-[2rem]" th:text="${seat.getSeatNumber()}"></button>
           </a>
-          <div id="tooltip-empty" role="tooltip" class="absolute z-10 invisible bg-black inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip">
+          <div th:id="${'tooltip-empty' + seat.getId()}" role="tooltip" class="absolute z-10 invisible bg-black inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip">
             This seat is empty
             <div class="tooltip-arrow" data-popper-arrow></div>
           </div>
         </div>
-        <div th:if="${seat.getTicket() != null}">
-          <button type="button" data-tooltip-target="tooltip-booked" class="cursor-not-allowed rounded-md bg-red-900 text-white m-2 p-1 w-[2rem] h-[2rem]" th:text="${seat.getSeatNumber()}"></button>
-          <div id="tooltip-booked" role="tooltip" class="absolute z-10 invisible bg-black inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip">
-            Here seats <th:block th:text="${seat.getTicket().getPassenger()}"/>
+        <div th:unless="${seat.getPassengerName() == null}">
+          <button th:id="${seat.getId()}" type="button" th:data-tooltip-target="${'tooltip-empty' + seat.getId()}" class="cursor-not-allowed rounded-md bg-red-900 text-white m-2 p-1 w-[2rem] h-[2rem]" th:text="${seat.getSeatNumber()}"></button>
+          <div th:id="${'tooltip-empty' + seat.getId()}" role="tooltip" class="absolute z-10 invisible bg-black inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip">
+            Here seats <th:block th:text="${seat.getPassengerName()}"/>
             <div class="tooltip-arrow" data-popper-arrow></div>
           </div>
         </div>

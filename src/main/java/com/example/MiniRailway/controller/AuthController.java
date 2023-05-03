@@ -27,8 +27,19 @@ public class AuthController {
     public String registerPost(@ModelAttribute UserDto userDto,
                                Model model){
         userService.save(userDto);
-        model.addAttribute("message", "User successfully added!");
-        return "auth";
+        currentUser = userService.login(userDto.getUsername(), userDto.getPassword());
+        if (!currentUser.getUsername().equals("admin")){
+            model.addAttribute("currentUser", currentUser);
+            model.addAttribute("allTrains", trainService.getAll());
+            model.addAttribute("getArrivalTime", new HashMap<>());
+            model.addAttribute("availableSeats",trainService.emptyTrainSeats());
+            return "user-menu";
+        } else {
+            model.addAttribute("allTrains", trainService.getAll());
+            model.addAttribute("getArrivalTime", new HashMap<>());
+            model.addAttribute("availableSeats",trainService.emptyTrainSeats());
+            return "admin-trains";
+        }
     }
 
     @PostMapping(value = "/login")
@@ -40,10 +51,12 @@ public class AuthController {
             model.addAttribute("currentUser", currentUser);
             model.addAttribute("allTrains", trainService.getAll());
             model.addAttribute("getArrivalTime", new HashMap<>());
+            model.addAttribute("availableSeats",trainService.emptyTrainSeats());
             return "user-menu";
         } else {
             model.addAttribute("allTrains", trainService.getAll());
             model.addAttribute("getArrivalTime", new HashMap<>());
+            model.addAttribute("availableSeats",trainService.emptyTrainSeats());
             return "admin-trains";
         }
     }
