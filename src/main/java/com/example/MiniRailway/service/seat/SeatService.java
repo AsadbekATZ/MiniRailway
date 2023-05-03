@@ -2,6 +2,7 @@ package com.example.MiniRailway.service.seat;
 
 import com.example.MiniRailway.domain.dto.SeatDto;
 import com.example.MiniRailway.domain.entity.seat.SeatEntity;
+import com.example.MiniRailway.domain.entity.user.UserEntity;
 import com.example.MiniRailway.exception.AlreadyExistsException;
 import com.example.MiniRailway.exception.NotFoundException;
 import com.example.MiniRailway.repository.SeatRepository;
@@ -28,13 +29,6 @@ public class SeatService implements BaseService<SeatDto, SeatEntity> {
         }
     }
 
-    public void setTicketId(UUID seatId, UUID ticketId){
-        SeatEntity seat = seatRepository.findById(seatId).orElse(null);
-        if (seat != null) {
-            seatRepository.setTicketId(seatId, ticketId);
-        } else throw new NotFoundException("This seat was not found");
-    }
-
     @Override
     public void delete(UUID id) {
         Optional<SeatEntity> byId = seatRepository.findById(id);
@@ -51,14 +45,12 @@ public class SeatService implements BaseService<SeatDto, SeatEntity> {
     }
 
     @Override
-    public void update(SeatDto seatDto, UUID id) {
-        SeatEntity existingSeat = seatRepository.findById(id).orElse(null);
-        if (existingSeat != null && seatDto != null) {
-            existingSeat.setTrain(seatDto.getTrain());
-            existingSeat.setSeatNumber(seatDto.getSeatNumber());
-            existingSeat.setTicket(seatDto.getTicket());
-            seatRepository.save(existingSeat);
-        } else throw new NotFoundException("This seat was not found");
+    public void update(SeatDto createDto, UUID id) {
+
+    }
+
+    public void bookSeat(UserEntity user, String passengerName, UUID id) {
+        seatRepository.bookSeat(user, passengerName, id);
     }
 
     @Override
@@ -92,7 +84,7 @@ public class SeatService implements BaseService<SeatDto, SeatEntity> {
         List<SeatEntity> seats = new ArrayList<>();
         while (iterator.hasNext()) {
             SeatEntity emptySeat = iterator.next();
-            if (emptySeat.getTicket() == null) {
+            if (emptySeat.getUser() == null) {
                 seats.add(emptySeat);
             }
         }
@@ -103,7 +95,7 @@ public class SeatService implements BaseService<SeatDto, SeatEntity> {
         List<SeatEntity> seats = new ArrayList<>();
         while (iterator.hasNext()) {
             SeatEntity reservedSeat = iterator.next();
-            if (reservedSeat.getTicket() != null) {
+            if (reservedSeat.getUser() != null) {
                 seats.add(reservedSeat);
             }
         }

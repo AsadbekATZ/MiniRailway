@@ -74,7 +74,7 @@
             <td class="px-10 py-3" th:text="${train.getDeparture().getYear() + '/' + train.getDeparture().getMonthValue() + '/' + train.getDeparture().getDayOfMonth() + ' ' + train.getDeparture().getHour() + ':' + train.getDeparture().getMinute()}"></td>
             <td class="px-10 py-3" th:if="${getArrivalTime.isEmpty()}"> ---- </td>
             <td class="px-10 py-3" th:if="${!getArrivalTime.isEmpty()}"><th:block th:text="getArrivalTime.get(train.getId())"/></td>
-            <td class="px-10 py-3" th:text="${train.getSeats().size()}"></td>
+            <td class="px-10 py-3" th:text="${train.getSeats().size() + '/' + availableSeats.get(train.getId())}"></td>
             <td class="px-10 py-3" th:text="${train.getTrainClass()}"></td>
             <td class="px-[20px] py-3" th:text="'$' + ${train.getPrice()}"></td>
             <td class="py-3 flex items-center justify-end">

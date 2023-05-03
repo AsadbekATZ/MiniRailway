@@ -1,7 +1,7 @@
 package com.example.MiniRailway.domain.entity.user;
 
 import com.example.MiniRailway.domain.entity.BaseEntity;
-import com.example.MiniRailway.domain.entity.ticket.TicketEntity;
+import com.example.MiniRailway.domain.entity.seat.SeatEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -10,9 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.springframework.data.repository.cdi.Eager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,5 +38,5 @@ public class UserEntity extends BaseEntity {
     private Double balance = 100000.0;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<TicketEntity> tickets = new ArrayList<>();
+    private List<SeatEntity> seats = new ArrayList<>();
 }
