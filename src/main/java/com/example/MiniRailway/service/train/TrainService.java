@@ -30,8 +30,8 @@ public class TrainService implements BaseService<TrainDto, TrainEntity> {
     public void save(TrainDto createDto) {
         TrainEntity train = modelMapper.map(createDto, TrainEntity.class);
         List<SeatEntity> seats = new ArrayList<>();
-        for (int i = 60; i > 0; i--) {
-            SeatDto seatDto = new SeatDto(null, i, train);
+        for (int i = 1; i < 61; i++) {
+            SeatDto seatDto = new SeatDto(null, null, i, train);
             seats.add(modelMapper.map(seatDto, SeatEntity.class));
         }
         train.setSeats(seats);
@@ -76,7 +76,13 @@ public class TrainService implements BaseService<TrainDto, TrainEntity> {
             throw new NotFoundException("Train not found!");
         }
     }
-
+    public HashMap<UUID, Integer> emptyTrainSeats(){
+        HashMap<UUID, Integer> emptySeats = new HashMap<>();
+        for (TrainEntity train : trainRepository.findAll()) {
+            emptySeats.put(train.getId(), seatService.emptySeats(train.getId()).size());
+        }
+        return emptySeats;
+    }
     public List<TrainEntity> forwardDestinationTrains(LocalDateTime time,DestinationPoint start, DestinationPoint end){
         List<TrainEntity> forwardDestinationTrains = new ArrayList<>();
         for (TrainEntity train : trainRepository.trainByTime(time)) {

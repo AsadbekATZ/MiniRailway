@@ -30,6 +30,7 @@ public class UserController {
         model.addAttribute("getArrivalTime", new HashMap<>());
         model.addAttribute("allTrains", trainService.getAll());
         model.addAttribute("currentUser", currentUser);
+        model.addAttribute("availableSeats",trainService.emptyTrainSeats());
         model.addAttribute("message", "Balance successfully filled!");
         return "user-menu";
     }

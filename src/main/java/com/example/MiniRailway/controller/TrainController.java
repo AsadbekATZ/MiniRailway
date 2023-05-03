@@ -2,6 +2,7 @@ package com.example.MiniRailway.controller;
 
 import com.example.MiniRailway.domain.dto.TrainDto;
 import com.example.MiniRailway.domain.entity.train.TrainEntity;
+import com.example.MiniRailway.service.seat.SeatService;
 import com.example.MiniRailway.service.train.TrainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -20,9 +21,12 @@ public class TrainController {
 
     private final TrainService trainService;
 
+    private final SeatService seatService;
+
     @GetMapping("/all")
     public String allTrains(Model model) {
         model.addAttribute("currentUser", currentUser);
+        model.addAttribute("availableSeats",trainService.emptyTrainSeats());
         model.addAttribute("allTrains", trainService.getAll());
         model.addAttribute("getArrivalTime", new HashMap<>());
         return "user-menu";
@@ -33,6 +37,7 @@ public class TrainController {
         TrainEntity train = trainService.getById(trainId);
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("train",train);
+        model.addAttribute("availableSeats",seatService.emptySeats(train.getId()));
         model.addAttribute("getArrivalTime",trainService.getArrivalTime(train.getEndPoint()).get(trainId));
         return "train-seats";
     }

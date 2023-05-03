@@ -30,6 +30,7 @@ public class TrainEntity extends BaseEntity {
     private Double price;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "train")
+    @OrderBy("seatNumber ASC")
     private List<SeatEntity> seats;
 
     @Column(nullable = false)
