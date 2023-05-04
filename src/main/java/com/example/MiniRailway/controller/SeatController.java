@@ -54,4 +54,12 @@ public class SeatController {
         return "book-seat";
     }
 
+    @GetMapping(value = "/view-seat/{trainName}")
+    public String fullSeatList(@PathVariable(value = "trainName")String trainName,
+                               Model model){
+        List<SeatEntity> list = seatService.fullSeats(trainName);
+        model.addAttribute("fullSeatsList", list);
+        return "book-seat";
+    }
+
 }
