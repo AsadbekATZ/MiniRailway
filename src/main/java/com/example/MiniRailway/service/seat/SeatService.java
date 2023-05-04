@@ -101,4 +101,13 @@ public class SeatService implements BaseService<SeatDto, SeatEntity> {
         }
         return seats;
     }
+    public List<SeatEntity> myTicketList(UUID userId){
+        List<SeatEntity> myTicketList=new ArrayList<>();
+        for (SeatEntity seat: seatRepository.findAll()){
+            if (Objects.equals(seat.getUser().getId(),userId)){
+                myTicketList.add(seat);
+            }
+        }
+        return myTicketList;
+    }
 }

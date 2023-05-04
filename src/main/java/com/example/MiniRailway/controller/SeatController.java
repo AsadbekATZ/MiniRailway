@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 import static com.example.MiniRailway.controller.AuthController.currentUser;
@@ -44,4 +45,13 @@ public class SeatController {
         model.addAttribute("message", "Ticket successfully bought!");
         return "train-seats";
     }
+
+    @GetMapping(value = "/view-seat/{userId}")
+    public String myTicketList(@PathVariable(value = "userId")UUID userId,
+                           Model model){
+        List<SeatEntity> seatEntities = seatService.myTicketList(userId);
+        model.addAttribute("myTicketList", seatEntities);
+        return "book-seat";
+    }
+
 }
