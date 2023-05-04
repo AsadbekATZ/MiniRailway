@@ -90,6 +90,17 @@ public class SeatService implements BaseService<SeatDto, SeatEntity> {
         }
         return seats;
     }
+
+    public List<SeatEntity> fullSeats(String trainName){
+        List<SeatEntity> list=new ArrayList<>();
+        for (SeatEntity seat: seatRepository.findByTrainName(trainName)){
+            if (seat.getUser().getId()==null){
+                list.add(seat);
+            }
+        }
+        return list;
+    }
+
     public List<SeatEntity> reservedSeats(UUID trainId) {
         Iterator<SeatEntity> iterator = seatRepository.findByTrainId(trainId).iterator();
         List<SeatEntity> seats = new ArrayList<>();
@@ -100,5 +111,14 @@ public class SeatService implements BaseService<SeatDto, SeatEntity> {
             }
         }
         return seats;
+    }
+    public List<SeatEntity> myTicketList(UUID userId){
+        List<SeatEntity> myTicketList=new ArrayList<>();
+        for (SeatEntity seat: seatRepository.findAll()){
+            if (Objects.equals(seat.getUser().getId(),userId)){
+                myTicketList.add(seat);
+            }
+        }
+        return myTicketList;
     }
 }
