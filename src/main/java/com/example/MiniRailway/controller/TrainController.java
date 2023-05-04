@@ -29,6 +29,9 @@ public class TrainController {
         model.addAttribute("availableSeats",trainService.emptyTrainSeats());
         model.addAttribute("allTrains", trainService.getAll());
         model.addAttribute("getArrivalTime", new HashMap<>());
+        if (currentUser.getUsername().equals("admin")){
+            return "admin-trains";
+        }
         return "user-menu";
     }
 

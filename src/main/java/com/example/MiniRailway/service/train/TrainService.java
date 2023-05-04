@@ -45,6 +45,7 @@ public class TrainService implements BaseService<TrainDto, TrainEntity> {
 
     @Override
     public void delete(UUID id) {
+        trainRepository.deleteByTrainId(id);
     }
 
     @Override
@@ -59,11 +60,12 @@ public class TrainService implements BaseService<TrainDto, TrainEntity> {
 
     //
     public void update(String name, Double price, UUID trainId){
+        TrainEntity train = trainRepository.findById(trainId).
+                orElseThrow(() -> new NotFoundException("Train not found!"));
         try{
-            Optional<TrainEntity> train = trainRepository.findById(trainId);
-            train.get().setName(name);
-            train.get().setPrice(price);
-            trainRepository.save(train.get());
+            train.setName(name);
+            train.setPrice(price);
+            trainRepository.save(train);
         }catch (Exception e){
             throw new NotFoundException("This train does not exists");
         }
