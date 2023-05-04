@@ -1,22 +1,23 @@
 package com.example.MiniRailway.controller;
 
 import com.example.MiniRailway.domain.dto.TrainDto;
+import com.example.MiniRailway.domain.entity.train.TrainEntity;
+import com.example.MiniRailway.service.seat.SeatService;
 import com.example.MiniRailway.service.train.TrainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 @Controller
 @RequestMapping(value = "/admin")
 @RequiredArgsConstructor
 public class AdminController {
     private final TrainService trainService;
+    private final SeatService seatService;
     @PostMapping(value = "/create-train")
     public String createTrains(@ModelAttribute TrainDto trainDto, Model model){
         trainService.save(trainDto);
@@ -26,4 +27,14 @@ public class AdminController {
         model.addAttribute("message", "Train successfully added!");
         return "admin-trains";
     }
+    @GetMapping(value = "edit-train/{trainId}")
+    public String editTrainGet(@PathVariable(name = "trainId")UUID trainId,
+                               Model model){
+        TrainEntity train = trainService.getById(trainId);
+        model.addAttribute("train",train);
+        model.addAttribute("availableSeats",seatService.emptySeats(train.getId()));
+        model.addAttribute("getArrivalTime",trainService.getArrivalTime(train.getEndPoint()).get(trainId));
+        return "edit-train";
+    }
+
 }
