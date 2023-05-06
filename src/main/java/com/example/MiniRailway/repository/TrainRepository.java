@@ -19,7 +19,4 @@ public interface TrainRepository extends JpaRepository<TrainEntity, UUID> {
     @Modifying
     @Transactional
     void deleteByTrainId(UUID id);
-
-    @Query("select t from trains t where t.departure = :time")
-    List<TrainEntity> trainByTime(LocalDateTime time);
 }

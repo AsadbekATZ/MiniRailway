@@ -1,6 +1,7 @@
 package com.example.MiniRailway.controller;
 
 import com.example.MiniRailway.domain.dto.TrainDto;
+import com.example.MiniRailway.domain.entity.train.DestinationPoint;
 import com.example.MiniRailway.domain.entity.train.TrainEntity;
 import com.example.MiniRailway.service.seat.SeatService;
 import com.example.MiniRailway.service.train.TrainService;
@@ -9,7 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import static com.example.MiniRailway.controller.AuthController.currentUser;
@@ -45,21 +49,21 @@ public class TrainController {
         return "train-seats";
     }
 
-    @PostMapping(value = "/edit")
-    public String edit(@RequestParam(name = "name") String name,
-                       @RequestParam(name = "price") Double price,
-                       @RequestParam(name="id") UUID trainId,
-                       Model model){
-        trainService.update(name, price, trainId);
-        model.addAttribute("train",trainService.getById(trainId));
-        return "train-edit";
-    }
-
-    @PostMapping(value = "delete")
-    public String delete(@ModelAttribute TrainEntity train, Model model){
-        trainService.delete(train);
+    @PostMapping(value = "/search")
+    public String searchTrain(@RequestParam(name = "start") String start,
+                              @RequestParam(name = "end") String end,
+                              @RequestParam(name = "class") String trainClass,
+                              @RequestParam(name = "time") LocalDateTime time,
+                              Model model){
+        List<TrainEntity> searchTrains = trainService.searchTrain(time, start, end, trainClass);
+        if (searchTrains.size() == 0){
+            model.addAttribute("message", "No any matching trains were found!");
+        }
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("availableSeats",trainService.emptyTrainSeats());
         model.addAttribute("allTrains", trainService.getAll());
-        return "trains";
+        model.addAttribute("getArrivalTime", trainService.getArrivalTime(DestinationPoint.valueOf(end)));
+        model.addAttribute("searchTrains", searchTrains);
+        return "search-user-trains";
     }
-
 }
