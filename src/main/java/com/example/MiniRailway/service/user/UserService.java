@@ -2,8 +2,8 @@ package com.example.MiniRailway.service.user;
 
 import com.example.MiniRailway.domain.dto.UserDto;
 import com.example.MiniRailway.domain.entity.user.UserEntity;
-import com.example.MiniRailway.exception.NotFoundException;
 import com.example.MiniRailway.exception.AlreadyExistsException;
+import com.example.MiniRailway.exception.NotFoundException;
 import com.example.MiniRailway.repository.UserRepository;
 import com.example.MiniRailway.service.BaseService;
 import lombok.RequiredArgsConstructor;

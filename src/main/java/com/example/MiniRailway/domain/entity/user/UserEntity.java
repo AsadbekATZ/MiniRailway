@@ -2,7 +2,10 @@ package com.example.MiniRailway.domain.entity.user;
 
 import com.example.MiniRailway.domain.entity.BaseEntity;
 import com.example.MiniRailway.domain.entity.seat.SeatEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -37,6 +40,6 @@ public class UserEntity extends BaseEntity {
     @Positive
     private Double balance = 1.0;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<SeatEntity> seats = new ArrayList<>();
 }

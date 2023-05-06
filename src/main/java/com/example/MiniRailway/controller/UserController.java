@@ -21,8 +21,8 @@ import static com.example.MiniRailway.controller.AuthController.currentUser;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final TrainService trainService;
     private final SeatService seatService;
+    private final TrainService trainService;
     @PostMapping(value = "/fill-balance")
     public String loginPost(@RequestParam(name = "amount") Double amount,
                             @RequestParam(name = "userId") UUID userId,
@@ -37,7 +37,6 @@ public class UserController {
         model.addAttribute("message", "Balance successfully filled!");
         return "user-menu";
     }
-
     @GetMapping(value = "/my-tickets")
     public String myTickets(Model model){
         model.addAttribute("currentUser", currentUser);
