@@ -29,7 +29,7 @@ public class TrainEntity extends BaseEntity {
     @Positive()
     private Double price;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "train", orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "train", orphanRemoval = true)
     @OrderBy("seatNumber ASC")
     private List<SeatEntity> seats;
 

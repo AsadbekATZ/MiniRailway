@@ -1,6 +1,5 @@
 package com.example.MiniRailway.controller;
 
-import com.example.MiniRailway.domain.dto.TrainDto;
 import com.example.MiniRailway.domain.entity.train.DestinationPoint;
 import com.example.MiniRailway.domain.entity.train.TrainEntity;
 import com.example.MiniRailway.service.seat.SeatService;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
