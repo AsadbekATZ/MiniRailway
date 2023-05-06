@@ -46,19 +46,11 @@ public class SeatController {
         return "train-seats";
     }
 
-    @GetMapping(value = "/view-seat/{userId}")
+    @GetMapping(value = "/my-seats/{userId}")
     public String myTicketList(@PathVariable(value = "userId")UUID userId,
                            Model model){
         List<SeatEntity> seatEntities = seatService.myTicketList(userId);
         model.addAttribute("myTicketList", seatEntities);
-        return "book-seat";
-    }
-
-    @GetMapping(value = "/view-seat/{trainName}")
-    public String fullSeatList(@PathVariable(value = "trainName")String trainName,
-                               Model model){
-        List<SeatEntity> list = seatService.fullSeats(trainName);
-        model.addAttribute("fullSeatsList", list);
         return "book-seat";
     }
 

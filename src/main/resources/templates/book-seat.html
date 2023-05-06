@@ -50,7 +50,7 @@
     </div>
     <div th:if="${seat.getTrain().getPrice() > currentUser.getBalance()}">
         <div class="text-center text-xl">Your balance is not sufficient to book this seat! <i class="fa-solid fa-circle-xmark"></i></div>
-        <button class="block mx-auto my-10 w-[50%] text-center p-2 border-2 border-white rounded-lg text-white hover:bg-white hover:text-[#162938] transition">Fill my balance</button>
+        <button data-modal-target="balance-modal" data-modal-toggle="balance-modal" class="block mx-auto my-10 w-[50%] text-center p-2 border-2 border-white rounded-lg text-white hover:bg-white hover:text-[#162938] transition">Fill my balance</button>
     </div>
 </div>
 
@@ -91,23 +91,7 @@
 <!-- Loading spinner -->
 <div id="loader" class="hidden lds-ripple absolute right-0 left-0 mx-auto z-999 w-0 rotate-90 -translate-y-[60vh]"><div></div><div></div></div>
 
-<script type="text/javascript">
-    const searchForm = document.getElementById('search-form');
-    const loader = document.getElementById('loader');
 
-    searchForm.addEventListener('submit', (event) => {
-        // Prevent form submission
-        event.preventDefault();
-
-        // Show loader
-        loader.classList.remove('hidden');
-
-        // Submit the form after 2 seconds (for demo purposes only)
-        setTimeout(() => {
-            searchForm.submit();
-        }, 2000);
-    });
-</script>
 <script type="text/javascript">
     // Fade out the alert after 3 seconds
     setTimeout(function() {

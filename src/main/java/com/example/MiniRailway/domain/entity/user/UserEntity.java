@@ -35,7 +35,7 @@ public class UserEntity extends BaseEntity {
 
     @Column(nullable = false)
     @Positive
-    private Double balance = 100000.0;
+    private Double balance = 1.0;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<SeatEntity> seats = new ArrayList<>();

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>User Menu</title>
+  <title>Train Search Menu</title>
   <link th:href="@{/css/loader.css}" rel="stylesheet">
   <script src="https://kit.fontawesome.com/12f987d29c.js" crossorigin="anonymous"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,19 +50,19 @@
           </button>
         </li>
         <li>
-            <button onclick="busTr()" class="block text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-sm px-5 py-2.5 text-center bg-transparent border-2 border-white hover:bg-white hover:text-[#212529] transition focus:ring-gray-800" type="button">
-              Business class
-            </button>
+          <button onclick="busTr()" class="block text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-sm px-5 py-2.5 text-center bg-transparent border-2 border-white hover:bg-white hover:text-[#212529] transition focus:ring-gray-800" type="button">
+            Business class
+          </button>
         </li>
         <li>
-            <button onclick="staTr()" class="block text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-sm px-5 py-2.5 text-center bg-transparent border-2 border-white hover:bg-white hover:text-[#212529] transition focus:ring-gray-800" type="button">
-              Standard class
-            </button>
+          <button onclick="staTr()" class="block text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-sm px-5 py-2.5 text-center bg-transparent border-2 border-white hover:bg-white hover:text-[#212529] transition focus:ring-gray-800" type="button">
+            Standard class
+          </button>
         </li>
         <li>
-            <button onclick="ecoTr()" class="block text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-sm px-5 py-2.5 text-center bg-transparent border-2 border-white hover:bg-white hover:text-[#212529] transition focus:ring-gray-800" type="button">
-              Economy class
-            </button>
+          <button onclick="ecoTr()" class="block text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-sm px-5 py-2.5 text-center bg-transparent border-2 border-white hover:bg-white hover:text-[#212529] transition focus:ring-gray-800" type="button">
+            Economy class
+          </button>
         </li>
       </ul>
     </div>
@@ -111,7 +111,7 @@
       <option value="STANDARD">STANDARD</option>
       <option value="ECONOMY">ECONOMY</option>
     </select>
-    <input required name="time" type="datetime-local" class="text-white w-full bg-transparent border-2 border-r-transparent border-white hover:bg-white hover:text-[#212529] transition">
+    <input required name="date" type="datetime-local" class="text-white w-full bg-transparent border-2 border-r-transparent border-white hover:bg-white hover:text-[#212529] transition">
     <button type="submit" class="p-2.5 text-sm font-medium text-white bg-transparent border-2 border-white hover:bg-white hover:text-[#162938] rounded-r-lg border focus:ring-4 focus:outline-none focus:ring-blue-800">
       <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
       <span class="sr-only">Search</span>
@@ -119,8 +119,51 @@
   </div>
 </form>
 
+<div th:if="${searchTrains.size() > 0}">
+  <!-- Search Train table -->
+  <div id="searchTrains" class="overflow-x-auto mt-[5vh] px-20">
+    <table class="w-full text-sm text-left text-white">
+      <thead class="text-xs uppercase bg-black text-white">
+      <tr>
+        <th scope="col" class="px-10 py-3">Train</th>
+        <th scope="col" class="px-10 py-3">Departure</th>
+        <th scope="col" class="px-10 py-3">Arrival</th>
+        <th scope="col" class="px-10 py-3">From</th>
+        <th scope="col" class="px-10 py-3">To</th>
+        <th scope="col" class="px-10 py-3">Train capacity</th>
+        <th scope="col" class="px-10 py-3">Train class</th>
+        <th scope="col" class="px-[20px] py-3">Price</th>
+        <th scope="col" class="py-3">
+          <span class="sr-only">View</span>
+        </th>
+      </tr>
+      </thead>
+      <tbody th:each="train: ${searchTrains}">
+      <tr class="border-b border-gray-700">
+        <th scope="row" class="px-10 py-3 font-medium whitespace-nowrap text-white" th:text="${train.getName()}"></th>
+        <td class="px-10 py-3" th:text="${train.getDeparture().getYear() + '/' + train.getDeparture().getMonthValue() + '/' + train.getDeparture().getDayOfMonth() + ' ' + train.getDeparture().getHour() + ':' + train.getDeparture().getMinute()}"></td>
+        <td class="px-10 py-3"><th:block th:text="${getArrivalTime.get(train.getId())}"/></td>
+        <td class="px-10 py-3" th:text="${train.getStartPoint()}"></td>
+        <td class="px-10 py-3" th:text="${train.getEndPoint()}"></td>
+        <td class="px-10 py-3" th:text="${train.getSeats().size() + '/' + availableSeats.get(train.getId())}"></td>
+        <td class="px-10 py-3" th:text="${train.getTrainClass()}"></td>
+        <td class="px-[20px] py-3" th:text="'$' + ${train.getPrice()}"></td>
+        <td class="py-3 flex items-center justify-end">
+          <!-- Select button -->
+          <a th:href="@{|/trains/train-edit/${train.getId()}|}">
+            <button type="button" class="mx-5 text-white bg-transparent border-2 border-white hover:bg-white hover:text-[#162938] transition inline-flex items-center focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center focus:ring-primary-800">
+              Select train
+            </button>
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 <!-- All Train table -->
-<div id="allTrains" class="overflow-x-auto mt-[5vh] px-20">
+<div id="allTrains" class="hidden overflow-x-auto mt-[5vh] px-20">
   <table class="w-full text-sm text-left text-white">
     <thead class="text-xs uppercase bg-black text-white">
     <tr>
@@ -324,6 +367,9 @@
   </div>
 </div>
 
+<!-- Loading spinner -->
+<div id="loader" class="hidden lds-ripple absolute right-0 left-0 mx-auto z-999 w-0 rotate-90 -translate-y-[60vh]"><div></div><div></div></div>
+
 <script type="text/javascript">
   const allTrains = document.getElementById("allTrains");
   const businessTrains = document.getElementById("businessTrains");
@@ -353,6 +399,23 @@
     standardTrains.style.display = "none";
     economyTrains.style.display = "block";
   }
+</script>
+<script type="text/javascript">
+  const searchForm = document.getElementById('search-form');
+  const loader = document.getElementById('loader');
+
+  searchForm.addEventListener('submit', (event) => {
+    // Prevent form submission
+    event.preventDefault();
+
+    // Show loader
+    loader.classList.remove('hidden');
+
+    // Submit the form after 2 seconds (for demo purposes only)
+    setTimeout(() => {
+      searchForm.submit();
+    }, 2000);
+  });
 </script>
 <script type="text/javascript">
   // Fade out the alert after 3 seconds
