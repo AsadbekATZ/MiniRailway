@@ -3,13 +3,18 @@ import com.example.MiniRailway.domain.dto.SeatDto;
 import com.example.MiniRailway.domain.dto.TrainDto;
 import com.example.MiniRailway.domain.entity.seat.SeatEntity;
 import com.example.MiniRailway.domain.entity.train.DestinationPoint;
+import com.example.MiniRailway.domain.entity.train.TrainClass;
 import com.example.MiniRailway.domain.entity.train.TrainEntity;
+import com.example.MiniRailway.domain.entity.user.UserEntity;
 import com.example.MiniRailway.exception.AlreadyExistsException;
 import com.example.MiniRailway.exception.NotFoundException;
+import com.example.MiniRailway.exception.WrongSearchException;
 import com.example.MiniRailway.repository.TrainRepository;
+import com.example.MiniRailway.repository.UserRepository;
 import com.example.MiniRailway.service.BaseService;
 
 import com.example.MiniRailway.service.seat.SeatService;
+import com.example.MiniRailway.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -24,6 +29,8 @@ public class TrainService implements BaseService<TrainDto, TrainEntity> {
     private final TrainRepository trainRepository;
 
     private final SeatService seatService;
+
+    private final UserService userService;
 
     private final ModelMapper modelMapper;
 
@@ -50,6 +57,13 @@ public class TrainService implements BaseService<TrainDto, TrainEntity> {
 
     @Override
     public void delete(TrainEntity trainEntity) {
+        Double price = trainEntity.getPrice();
+        for (SeatEntity seat : trainEntity.getSeats()) {
+            if (seat.getUser() != null){
+                UserEntity user = seat.getUser();
+                userService.fillBalance(user.getBalance() + price, user.getId());
+            }
+        }
         trainRepository.delete(trainEntity);
     }
 
@@ -86,20 +100,31 @@ public class TrainService implements BaseService<TrainDto, TrainEntity> {
         }
         return emptySeats;
     }
-    public List<TrainEntity> forwardDestinationTrains(LocalDateTime time,DestinationPoint start, DestinationPoint end){
+
+    public List<TrainEntity> trainByTime(LocalDateTime time){
+        List<TrainEntity> trainByTime = new ArrayList<>();
+        for (TrainEntity train : trainRepository.findAll()) {
+            if (train.getDeparture().getDayOfYear() == time.getDayOfYear()){
+                trainByTime.add(train);
+            }
+        }
+        return trainByTime;
+    }
+
+    public List<TrainEntity> forwardDestinationTrains(LocalDateTime time,DestinationPoint start, DestinationPoint end, TrainClass trainClass){
         List<TrainEntity> forwardDestinationTrains = new ArrayList<>();
-        for (TrainEntity train : trainRepository.trainByTime(time)) {
-            if (train.getStartPoint().getValue() < start.getValue() && train.getEndPoint().getValue() > end.getValue()){
+        for (TrainEntity train : trainByTime(time)) {
+            if (train.getStartPoint().getValue() <= start.getValue() && train.getEndPoint().getValue() >= end.getValue() && train.getTrainClass().equals(trainClass)){
                 forwardDestinationTrains.add(train);
             }
         }
         return forwardDestinationTrains;
     }
 
-    public List<TrainEntity> reverseDestinationTrains(LocalDateTime time,DestinationPoint start, DestinationPoint end){
+    public List<TrainEntity> reverseDestinationTrains(LocalDateTime time,DestinationPoint start, DestinationPoint end, TrainClass trainClass){
         List<TrainEntity> reverseDestinationTrains = new ArrayList<>();
-        for (TrainEntity train : trainRepository.trainByTime(time)) {
-            if (train.getStartPoint().getValue() > start.getValue() && train.getEndPoint().getValue() < end.getValue()){
+        for (TrainEntity train : trainByTime(time)) {
+            if (train.getStartPoint().getValue() >= start.getValue() && train.getEndPoint().getValue() <= end.getValue() && train.getTrainClass().equals(trainClass)){
                 reverseDestinationTrains.add(train);
             }
         }
@@ -117,5 +142,23 @@ public class TrainService implements BaseService<TrainDto, TrainEntity> {
             getArrivalTime.put(trainEntity.getId(), trainEntity.getDeparture().plusHours(distance));
         }
         return getArrivalTime;
+    }
+
+    public List<TrainEntity> searchTrain(LocalDateTime time,
+                                         String start,
+                                         String end,
+                                         String trainClass){
+        if (trainClass.equals("ALL") || start.equals("ALL") || end.equals("ALL") ||
+        start.equals(end)){
+            throw new WrongSearchException("Please enter correct values to search!");
+        }
+        DestinationPoint startPoint = DestinationPoint.valueOf(start);
+        DestinationPoint endPoint = DestinationPoint.valueOf(end);
+        TrainClass trainClassEnum = TrainClass.valueOf(trainClass);
+        if (startPoint.getValue() < endPoint.getValue()){
+            return forwardDestinationTrains(time, startPoint, endPoint, trainClassEnum);
+        } else {
+            return reverseDestinationTrains(time, startPoint, endPoint, trainClassEnum);
+        }
     }
 }
