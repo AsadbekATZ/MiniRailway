@@ -2,7 +2,6 @@ package com.example.MiniRailway.service.seat;
 
 import com.example.MiniRailway.domain.dto.SeatDto;
 import com.example.MiniRailway.domain.entity.seat.SeatEntity;
-import com.example.MiniRailway.domain.entity.train.TrainEntity;
 import com.example.MiniRailway.domain.entity.user.UserEntity;
 import com.example.MiniRailway.exception.AlreadyExistsException;
 import com.example.MiniRailway.exception.NotFoundException;
@@ -53,8 +52,6 @@ public class SeatService implements BaseService<SeatDto, SeatEntity> {
     }
 
     public void bookSeat(UserEntity user, String passengerName, UUID id) {
-        Double balance = user.getBalance() - getById(id).getTrain().getPrice();
-        userService.fillBalance(balance, user.getId());
         seatRepository.bookSeat(user, passengerName, id);
     }
 
@@ -96,6 +93,7 @@ public class SeatService implements BaseService<SeatDto, SeatEntity> {
         return seats;
     }
 
+
     public List<SeatEntity> reservedSeats(UUID trainId) {
         Iterator<SeatEntity> iterator = seatRepository.findByTrainId(trainId).iterator();
         List<SeatEntity> seats = new ArrayList<>();
@@ -107,7 +105,6 @@ public class SeatService implements BaseService<SeatDto, SeatEntity> {
         }
         return seats;
     }
-
     public void deleteTicket(UUID ticketId){
         SeatEntity seat = seatRepository.findById(ticketId).
                 orElseThrow(() -> new NotFoundException("Seat not found!"));

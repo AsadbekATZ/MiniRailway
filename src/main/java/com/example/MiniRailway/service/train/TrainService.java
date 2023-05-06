@@ -1,4 +1,5 @@
 package com.example.MiniRailway.service.train;
+
 import com.example.MiniRailway.domain.dto.SeatDto;
 import com.example.MiniRailway.domain.dto.TrainDto;
 import com.example.MiniRailway.domain.entity.seat.SeatEntity;
@@ -10,9 +11,7 @@ import com.example.MiniRailway.exception.AlreadyExistsException;
 import com.example.MiniRailway.exception.NotFoundException;
 import com.example.MiniRailway.exception.WrongSearchException;
 import com.example.MiniRailway.repository.TrainRepository;
-import com.example.MiniRailway.repository.UserRepository;
 import com.example.MiniRailway.service.BaseService;
-
 import com.example.MiniRailway.service.seat.SeatService;
 import com.example.MiniRailway.service.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
