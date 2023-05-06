@@ -27,7 +27,7 @@
       <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y rounded-lg shadow w-44 divide-[#162938]">
         <ul class="py-2 text-sm text-black" aria-labelledby="dropdownLargeButton">
           <li>
-            <a href="#" class="block px-4 py-2 hover:bg-[#212529] hover:text-white">My tickets</a>
+            <a th:href="@{/user/my-tickets}" class="block px-4 py-2 hover:bg-[#212529] hover:text-white">My tickets</a>
           </li>
           <li>
             <!-- Balance fill modal toggle -->
@@ -85,7 +85,7 @@
   <div class="p-2 border-4 border-white mx-auto rounded-2xl my-10">
     <div class="grid grid-rows-3 grid-flow-col">
       <div th:each="seat: ${train.getSeats()}">
-        <div th:if="${seat.getPassengerName() == null}">
+        <div th:if="${seat.getUser() == null}">
           <a th:href="@{|/seats/view-seat/${seat.getId()}|}">
             <button type="submit" th:data-tooltip-target="${'tooltip-empty' + seat.getId()}" class="bg-white rounded-md text-black m-2 p-1 w-[2rem] h-[2rem]" th:text="${seat.getSeatNumber()}"></button>
           </a>
@@ -94,7 +94,7 @@
             <div class="tooltip-arrow" data-popper-arrow></div>
           </div>
         </div>
-        <div th:unless="${seat.getPassengerName() == null}">
+        <div th:unless="${seat.getUser() == null}">
           <button th:id="${seat.getId()}" type="button" th:data-tooltip-target="${'tooltip-empty' + seat.getId()}" class="cursor-not-allowed rounded-md bg-red-900 text-white m-2 p-1 w-[2rem] h-[2rem]" th:text="${seat.getSeatNumber()}"></button>
           <div th:id="${'tooltip-empty' + seat.getId()}" role="tooltip" class="absolute z-10 invisible bg-black inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip">
             Here seats <th:block th:text="${seat.getPassengerName()}"/>

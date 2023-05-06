@@ -2,11 +2,13 @@ package com.example.MiniRailway.service.seat;
 
 import com.example.MiniRailway.domain.dto.SeatDto;
 import com.example.MiniRailway.domain.entity.seat.SeatEntity;
+import com.example.MiniRailway.domain.entity.train.TrainEntity;
 import com.example.MiniRailway.domain.entity.user.UserEntity;
 import com.example.MiniRailway.exception.AlreadyExistsException;
 import com.example.MiniRailway.exception.NotFoundException;
 import com.example.MiniRailway.repository.SeatRepository;
 import com.example.MiniRailway.service.BaseService;
+import com.example.MiniRailway.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ public class SeatService implements BaseService<SeatDto, SeatEntity> {
 
     private final SeatRepository seatRepository;
     private final ModelMapper modelMapper;
+    private final UserService userService;
     @Override
     public void save(SeatDto createDto) {
         SeatEntity seat=modelMapper.map(createDto, SeatEntity.class);
@@ -50,6 +53,8 @@ public class SeatService implements BaseService<SeatDto, SeatEntity> {
     }
 
     public void bookSeat(UserEntity user, String passengerName, UUID id) {
+        Double balance = user.getBalance() - getById(id).getTrain().getPrice();
+        userService.fillBalance(balance, user.getId());
         seatRepository.bookSeat(user, passengerName, id);
     }
 
@@ -102,10 +107,25 @@ public class SeatService implements BaseService<SeatDto, SeatEntity> {
         }
         return seats;
     }
+
+    public void deleteTicket(UUID ticketId){
+        SeatEntity seat = seatRepository.findById(ticketId).
+                orElseThrow(() -> new NotFoundException("Seat not found!"));
+        try{
+            Double balance = seat.getUser().getBalance() + (seat.getTrain().getPrice() * 0.5);
+            userService.fillBalance(balance, seat.getUser().getId());
+            seat.setPassengerName(null);
+            seat.setUser(null);
+            seatRepository.save(seat);
+        }catch (Exception e){
+            throw new NotFoundException("This seat does not exists");
+        }
+    }
+
     public List<SeatEntity> myTicketList(UUID userId){
         List<SeatEntity> myTicketList=new ArrayList<>();
         for (SeatEntity seat: seatRepository.findAll()){
-            if (Objects.equals(seat.getUser().getId(),userId)){
+            if (seat.getUser() != null && Objects.equals(seat.getUser().getId(),userId)){
                 myTicketList.add(seat);
             }
         }
