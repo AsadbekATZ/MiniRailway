@@ -4,6 +4,7 @@ import com.example.MiniRailway.domain.entity.train.DestinationPoint;
 import com.example.MiniRailway.domain.entity.train.TrainEntity;
 import com.example.MiniRailway.service.seat.SeatService;
 import com.example.MiniRailway.service.train.TrainService;
+import com.example.MiniRailway.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,9 +25,11 @@ public class TrainController {
     private final TrainService trainService;
 
     private final SeatService seatService;
+    private final UserService userService;
 
     @GetMapping("/all")
     public String allTrains(Model model) {
+        currentUser = userService.getById(currentUser.getId());
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("availableSeats",trainService.emptyTrainSeats());
         model.addAttribute("allTrains", trainService.getAll());
@@ -40,6 +43,7 @@ public class TrainController {
     @GetMapping(value = "/train-edit/{trainId}")
     public String details(@PathVariable(value = "trainId") UUID trainId,Model model){
         TrainEntity train = trainService.getById(trainId);
+        currentUser = userService.getById(currentUser.getId());
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("train",train);
         model.addAttribute("availableSeats",seatService.emptySeats(train.getId()));
@@ -57,6 +61,7 @@ public class TrainController {
         if (searchTrains.size() == 0){
             model.addAttribute("message", "No any matching trains were found!");
         }
+        currentUser = userService.getById(currentUser.getId());
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("availableSeats",trainService.emptyTrainSeats());
         model.addAttribute("allTrains", trainService.getAll());

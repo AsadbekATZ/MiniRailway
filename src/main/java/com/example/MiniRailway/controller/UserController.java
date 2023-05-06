@@ -39,6 +39,7 @@ public class UserController {
     }
     @GetMapping(value = "/my-tickets")
     public String myTickets(Model model){
+        currentUser = userService.getById(currentUser.getId());
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("myTickets", seatService.myTicketList(currentUser.getId()));
         return "my-tickets";
@@ -48,6 +49,7 @@ public class UserController {
     public String deleteMyTicket(@RequestParam(name = "deleteId") UUID ticketId,
                                  Model model){
         seatService.deleteTicket(ticketId);
+        currentUser = userService.getById(currentUser.getId());
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("myTickets", seatService.myTicketList(currentUser.getId()));
         model.addAttribute("message", "Ticket deleted!");

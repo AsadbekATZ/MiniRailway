@@ -4,6 +4,7 @@ import com.example.MiniRailway.domain.entity.seat.SeatEntity;
 import com.example.MiniRailway.domain.entity.train.TrainEntity;
 import com.example.MiniRailway.service.seat.SeatService;
 import com.example.MiniRailway.service.train.TrainService;
+import com.example.MiniRailway.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,10 +22,12 @@ public class SeatController {
 
     private final SeatService seatService;
     private final TrainService trainService;
+    private final UserService userService;
 
     @GetMapping(value = "/view-seat/{seatId}")
     public String viewSeat(@PathVariable(value = "seatId")UUID seatId,
                            Model model){
+        currentUser = userService.getById(currentUser.getId());
         SeatEntity seat = seatService.getById(seatId);
         model.addAttribute("seat", seat);
         model.addAttribute("currentUser", currentUser);
@@ -35,9 +38,12 @@ public class SeatController {
     public String buyTicket(@RequestParam(name = "fullName") String passengerName,
                             @RequestParam(name = "seatId") UUID seatId,
                             Model model){
+        System.out.println(currentUser);
         seatService.bookSeat(currentUser, passengerName, seatId);
         SeatEntity seat = seatService.getById(seatId);
         TrainEntity train = trainService.getById(seat.getTrain().getId());
+        userService.fillBalance(currentUser.getBalance() - seat.getTrain().getPrice(), currentUser.getId());
+        currentUser.setBalance(currentUser.getBalance() - seat.getTrain().getPrice());
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("train",seat.getTrain());
         model.addAttribute("availableSeats",seatService.emptySeats(train.getId()));

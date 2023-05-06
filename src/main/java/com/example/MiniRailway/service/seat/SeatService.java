@@ -6,6 +6,7 @@ import com.example.MiniRailway.domain.entity.user.UserEntity;
 import com.example.MiniRailway.exception.AlreadyExistsException;
 import com.example.MiniRailway.exception.NotFoundException;
 import com.example.MiniRailway.repository.SeatRepository;
+import com.example.MiniRailway.repository.UserRepository;
 import com.example.MiniRailway.service.BaseService;
 import com.example.MiniRailway.service.user.UserService;
 import lombok.RequiredArgsConstructor;
